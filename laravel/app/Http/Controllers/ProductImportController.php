@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductsImport;
+use Illuminate\Support\Facades\Log;
 
 class ProductImportController extends Controller
 {
@@ -17,19 +18,23 @@ class ProductImportController extends Controller
     // 2. Processar l'Excel
     public function store(Request $request)
     {
-        // Validem que s'hagi pujat un fitxer i sigui Excel
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);
 
         try {
-            // La màgia de Laravel Excel
-            Excel::import(new ProductsImport, $request->file('file'));
+            $import = new ProductsImport(); // Creem la instància abans
+            Excel::import($import, $request->file('file'));
             
-            return back()->with('success', 'Productes importats correctament!');
+            // Registrem al Log de Laravel (storage/logs/laravel.log)
+            Log::info("Importació d'Excel: s'han importat/actualitzat {$import->rows} productes.");
+            
+            // Retornem el feedback a la vista amb el número exacte
+            return back()->with('success', "S'han importat o actualitzat {$import->rows} productes correctament!");
+
         } catch (\Exception $e) {
-            // Capturem errors (de format o validació)
-            return back()->with('error', 'Error importat: ' . $e->getMessage());
+            Log::error("Error a la importació d'Excel: " . $e->getMessage());
+            return back()->with('error', 'Error important: ' . $e->getMessage());
         }
     }
 }
