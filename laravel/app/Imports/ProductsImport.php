@@ -22,9 +22,9 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
             [
                 'name'        => $row['name'],
                 'description' => $row['description'] ?? '',
-                'img'       => $row['img'],
+                'img'       => $row['img'] ?? '',
                 'price'       => $row['price'],
-                'stock'       => $row['stock'] ?? '',
+                'stock'       => $row['stock'],
             ]
         );
     }

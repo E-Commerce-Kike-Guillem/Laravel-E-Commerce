@@ -18,3 +18,14 @@ Arquitectura:
 v1: Codi barrejat (HTML + lògica PHP) en el mateix fitxer de login.
 
 v2: Separació MVC. Tenim AuthenticatedSessionController per a la lògica, Vistes Blade per al disseny, i Rutes definides a auth.php.
+
+## 🔌 API REST (Sprint 3 - Tasca C5)
+
+S'ha implementat una API RESTful base per a ser consumida pel futur client SPA (Vue.js) al Sprint 4.
+
+### Endpoints Disponibles:
+- `GET /api/products`: Retorna llista paginada de productes.
+  - Paràmetres opcionals: `?page=1`, `?q=nom_producte`
+- `GET /api/products/{id}`: Retorna el detall d'un producte.
+
+Les respostes estan normalitzades utilitzant `ProductResource` (JSON API Standard).

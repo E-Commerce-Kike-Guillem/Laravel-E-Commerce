@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductAdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,5 +26,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/productes', [ProductController::class, 'index'])->name('products.index');
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    
+    Route::get('/products', [ProductAdminController::class, 'index'])->name('products.index');
+    Route::get('/products/{id}/edit', [ProductAdminController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{id}', [ProductAdminController::class, 'update'])->name('products.update');
+
+});
 
 require __DIR__.'/auth.php';
