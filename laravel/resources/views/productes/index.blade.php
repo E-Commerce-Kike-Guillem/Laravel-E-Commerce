@@ -14,7 +14,7 @@
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
                         @if($product->image)
-                           <img src="{{ asset('storage/' . $product->img) }}" alt="{{ $product->name }}">
+                          <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="object-cover h-full w-full">
                         @else
                             <span class="text-gray-400">Sense Imatge</span>
                         @endif
