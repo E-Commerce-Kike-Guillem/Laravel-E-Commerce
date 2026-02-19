@@ -1,106 +1,211 @@
-Proyecto E-Commerce (Laravel)
-(Insertar aquí imagen de la vista previa de la aplicación)
+# 🛒 Proyecto E-Commerce (Laravel)
 
-Descripción
-¿Qué es E-Commerce Laravel?
-Es una plataforma de comercio electrónico desarrollada íntegramente con el framework Laravel. Este proyecto gestiona un catálogo completo de productos, la gestión de usuarios (registro, login, perfiles), administración de productos e importación de datos desde un sistema legacy en PHP plano.
+![Vista previa de la aplicación](./preview.png)
 
-¿Por qué lo usamos/desarrollamos?
-Este proyecto se desarrolla para establecer una arquitectura robusta, escalable y mantenible utilizando metodologías ágiles. La finalidad principal es disponer de una tienda en línea completa que ponga en práctica el patrón MVC, protección de rutas mediante middleware (como el panel de administrador), uso de bases de datos relacionales con migraciones/seeders y un despliegue estructurado utilizando contenedores (Docker). Sirve a su vez como demostración práctica del módulo de Despliegue de Aplicaciones Web (DAW).
+## 📄 Descripción
 
-Tabla de Contenidos
+### ¿Qué es E-Commerce Laravel?
 
+Es una plataforma de comercio electrónico desarrollada íntegramente con el framework Laravel. Este proyecto gestiona:
 
-Tecnologías utilizadas
+* Catálogo completo de productos
+* Gestión de usuarios (registro, login, perfiles)
+* Administración de productos
+* Importación de datos desde un sistema legacy en PHP plano
 
-Puesta en marcha
+### ¿Por qué lo usamos/desarrollamos?
 
-Entornos
+Este proyecto se desarrolla para establecer una **arquitectura robusta, escalable y mantenible** utilizando metodologías ágiles.
 
-Guía de Contribución
+La finalidad principal es disponer de una tienda online completa que ponga en práctica:
 
-Documentación de desarrollo
+* Patrón MVC
+* Protección de rutas mediante middleware (ej. panel de administrador)
+* Uso de bases de datos relacionales con migraciones y seeders
+* Despliegue estructurado utilizando contenedores Docker
 
-Lista de Contribuidores
+También sirve como demostración práctica del módulo **Despliegue de Aplicaciones Web (DAW)**.
 
-Inspiración
+---
 
-Licencia
+## 📚 Tabla de Contenidos
 
+* Tecnologías utilizadas
+* Puesta en marcha
+* Entornos
+* Guía de Contribución
+* Documentación de desarrollo
+* Lista de Contribuidores
+* Inspiración
+* Licencia
 
-Tecnologías utilizadas
-Descripción de las tecnologías utilizadas para la construcción del proyecto:
+---
 
-Backend: PHP 8.x, Laravel 11.x
-Frontend: Blade, TailwindCSS, Vite, JavaScript
-Base de datos: MySQL / SQLite (gestionado con migraciones de Laravel)
-Testing: Pest / PHPUnit
+## 🧰 Tecnologías utilizadas
 
-Infraestructura y Despliegue: Docker, Docker Compose (incluye el entorno de desarrollo con compose.yaml)
-Control de versiones: Git y GitHub
+### Backend
 
-Puesta en Marcha
-Para ejecutar este proyecto en tu entorno de desarrollo local, sigue los siguientes comandos y requisitos:
+* PHP 8.x
+* Laravel 11.x
 
-Requisitos previos:
+### Frontend
 
-PHP >= 8.2
+* Blade
+* TailwindCSS
+* Vite
+* JavaScript
 
-Composer
+### Base de datos
 
-Node.js y npm
+* MySQL / SQLite
+* Gestionado con migraciones de Laravel
 
-Docker (opcional, pero recomendado para levantar el entorno completo)
+### Testing
 
-Pasos de instalación:
+* Pest
+* PHPUnit
 
-Clona el repositorio:
+### Infraestructura y despliegue
 
+* Docker
+* Docker Compose (incluye entorno de desarrollo con `compose.yaml`)
+
+### Control de versiones
+
+* Git
+* GitHub
+
+---
+
+## 🚀 Puesta en marcha
+
+Para ejecutar este proyecto en tu entorno local:
+
+### ✅ Requisitos previos
+
+* PHP >= 8.2
+* Composer
+* Node.js y npm
+* Docker (opcional pero recomendado)
+
+---
+
+### 📥 Instalación
+
+#### 1. Clona el repositorio
+
+```bash
 git clone https://github.com/tu-usuario/laravel-e-commerce.git
 cd laravel-e-commerce/laravel
-Instala las dependencias de backend y frontend:
+```
 
+#### 2. Instala dependencias
+
+```bash
 composer install
 npm install
-Configura las variables de entorno:
+```
 
+#### 3. Configura variables de entorno
+
+```bash
 cp .env.example .env
 php artisan key:generate
-Levanta el entorno de la base de datos (y la app si usas Laravel Sail/Docker):
+```
 
+#### 4. Levanta base de datos y servicios (Docker)
+
+```bash
 docker-compose up -d
-Ejecuta las migraciones y rellena la base de datos con información de prueba:
+```
 
+#### 5. Ejecuta migraciones y seeders
+
+```bash
 php artisan migrate --seed
-Compila los assets del frontend e inicia el servidor local:
+```
 
+#### 6. Compila assets e inicia servidor
+
+```bash
 npm run dev
 php artisan serve
+```
 
-Entornos
-Desarrollo: Entorno local en la máquina de cada desarrollador ejecutándose en http://localhost:8000
+---
 
-Producción: (Añadir URL de la plataforma desplegada, ej: https://ecommerce-ejemplo.com)
+## 🌍 Entornos
 
-Guía de Contribución
-Cualquier contribución al proyecto deberá seguir las siguientes normas de contribución:
+### Desarrollo
 
-Asegúrate de leer la documentación del flujo de trabajo acordado antes de subir código.
+Entorno local en la máquina de cada desarrollador:
 
-Abre un Issue describiendo el bug o la nueva característica.
+```
+http://localhost:8000
+```
 
-Crea una rama específica para tu tarea a partir de la rama principal (git checkout -b feature/nombre-de-la-mejora).
+### Producción
 
-Haz commits lógicos, atómicos y descriptivos.
+Añadir URL de la plataforma desplegada, por ejemplo:
 
-Sube tus cambios a tu fork o repositorio y abre un Pull Request.
+```
+https://ecommerce-ejemplo.com
+```
 
-El código debe pasar correctamente los tests automatizados (php artisan test) antes de ser aceptado.
+---
 
-Documentación de desarrollo
-Toda la documentación relacionada con la planificación (Gantt, Sprints, Riesgos Laborales) se encuentra almacenada en la carpeta de /Documentació del propio repositorio.
+## 🤝 Guía de Contribución
 
-Enlace a la Wiki del proyecto
+Para contribuir al proyecto:
 
-Licencia
-Este proyecto se desarrolla y distribuye de acuerdo a los términos de la Licencia MIT incluida.
+1. Lee la documentación del flujo de trabajo antes de subir código
+2. Abre un **Issue** describiendo el bug o mejora
+3. Crea una rama desde main:
+
+```bash
+git checkout -b feature/nombre-de-la-mejora
+```
+
+4. Haz commits lógicos, atómicos y descriptivos
+5. Sube tus cambios y abre un Pull Request
+6. El código debe pasar los tests:
+
+```bash
+php artisan test
+```
+
+---
+
+## 📖 Documentación de desarrollo
+
+Toda la documentación relacionada con:
+
+* Gantt
+* Sprints
+* Riesgos Laborales
+
+se encuentra en la carpeta:
+
+```
+/Documentació
+```
+
+También disponible en la **Wiki del proyecto**.
+
+---
+
+## 👥 Lista de Contribuidores
+
+*(Añadir aquí los colaboradores del proyecto)*
+
+---
+
+## 💡 Inspiración
+
+*(Añadir referencias o proyectos similares si procede)*
+
+---
+
+## 📜 Licencia
+
+Este proyecto se distribuye bajo los términos de la **Licencia MIT** incluida en el repositorio.
