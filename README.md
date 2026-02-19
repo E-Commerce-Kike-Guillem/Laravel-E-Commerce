@@ -9,6 +9,8 @@ Es una plataforma de comercio electrónico desarrollada íntegramente con el fra
 Este proyecto se desarrolla para establecer una arquitectura robusta, escalable y mantenible utilizando metodologías ágiles. La finalidad principal es disponer de una tienda en línea completa que ponga en práctica el patrón MVC, protección de rutas mediante middleware (como el panel de administrador), uso de bases de datos relacionales con migraciones/seeders y un despliegue estructurado utilizando contenedores (Docker). Sirve a su vez como demostración práctica del módulo de Despliegue de Aplicaciones Web (DAW).
 
 Tabla de Contenidos
+
+
 Tecnologías utilizadas
 
 Puesta en marcha
