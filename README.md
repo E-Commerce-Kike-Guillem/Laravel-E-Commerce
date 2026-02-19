@@ -1,8 +1,7 @@
-# 🛒 Proyecto E-Commerce (Laravel)
+# Proyecto E-Commerce (Laravel)
 
-![Vista previa de la aplicación](./preview.png)
 
-## 📄 Descripción
+## Descripción
 
 ### ¿Qué es E-Commerce Laravel?
 
@@ -28,7 +27,7 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ---
 
-## 📚 Tabla de Contenidos
+## Tabla de Contenidos
 
 * Tecnologías utilizadas
 * Puesta en marcha
@@ -41,7 +40,7 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ---
 
-## 🧰 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 ### Backend
 
@@ -77,11 +76,11 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ---
 
-## 🚀 Puesta en marcha
+## Puesta en marcha
 
 Para ejecutar este proyecto en tu entorno local:
 
-### ✅ Requisitos previos
+### Requisitos previos
 
 * PHP >= 8.2
 * Composer
@@ -90,7 +89,7 @@ Para ejecutar este proyecto en tu entorno local:
 
 ---
 
-### 📥 Instalación
+### Instalación
 
 #### 1. Clona el repositorio
 
@@ -134,7 +133,7 @@ php artisan serve
 
 ---
 
-## 🌍 Entornos
+## Entornos
 
 ### Desarrollo
 
@@ -154,7 +153,7 @@ https://ecommerce-ejemplo.com
 
 ---
 
-## 🤝 Guía de Contribución
+## Guía de Contribución
 
 Para contribuir al proyecto:
 
@@ -176,7 +175,7 @@ php artisan test
 
 ---
 
-## 📖 Documentación de desarrollo
+## Documentación de desarrollo
 
 Toda la documentación relacionada con:
 
@@ -194,18 +193,18 @@ También disponible en la **Wiki del proyecto**.
 
 ---
 
-## 👥 Lista de Contribuidores
+## Lista de Contribuidores
 
 *(Añadir aquí los colaboradores del proyecto)*
 
 ---
 
-## 💡 Inspiración
+## Inspiración
 
 *(Añadir referencias o proyectos similares si procede)*
 
 ---
 
-## 📜 Licencia
+## Licencia
 
 Este proyecto se distribuye bajo los términos de la **Licencia MIT** incluida en el repositorio.
