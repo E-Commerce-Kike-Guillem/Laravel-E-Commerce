@@ -14,12 +14,19 @@ Tabla de Contenidos
 Tecnologías utilizadas
 
 Puesta en marcha
+
 Entornos
+
 Guía de Contribución
+
 Documentación de desarrollo
+
 Lista de Contribuidores
+
 Inspiración
+
 Licencia
+
 
 Tecnologías utilizadas
 Descripción de las tecnologías utilizadas para la construcción del proyecto:
