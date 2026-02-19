@@ -29,14 +29,14 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ## Tabla de Contenidos
 
-* Tecnologías utilizadas
-* Puesta en marcha
-* Entornos
-* Guía de Contribución
-* Documentación de desarrollo
-* Lista de Contribuidores
-* Inspiración
-* Licencia
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Puesta en marcha](#puesta-en-marcha)
+- [Entornos](#entornos)
+- [Guía de Contribución](#guía-de-contribución)
+- [Documentación de desarrollo](#documentación-de-desarrollo)
+- [Lista de Contribuidores](#lista-de-contribuidores)
+- [Inspiración](#inspiración)
+- [Licencia](#licencia)
 
 ---
 
