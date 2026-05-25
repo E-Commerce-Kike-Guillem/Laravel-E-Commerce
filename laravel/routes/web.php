@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\ProfileController;
@@ -14,7 +13,6 @@ Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/productes', [ProductController::class, 'index'])->name('productes.index');
 // Si tienes un detalle de producto:
 Route::get('/productes/{product}', [ProductController::class, 'show'])->name('productes.show');
-Route::get('/productes', [ProductAdminController::class, 'index'])->name('productes.index');
 
 Route::get('/sobre-nosaltres', function () {
         return view('sobre-nosaltres.index');
@@ -51,4 +49,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/productes/{product}', [ProductAdminController::class, 'update'])->name('productes.update');
     Route::get('/import', [ProductImportController::class, 'show'])->name('import.show');
     Route::post('/import', [ProductImportController::class, 'store'])->name('import.store');
+    Route::post('/import', [ProductImportController::class, 'import'])->name('products.import.store');
 });

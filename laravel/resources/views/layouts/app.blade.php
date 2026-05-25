@@ -39,9 +39,7 @@
 @auth
     <a href="{{ route('profile.edit') }}" class="nav-link">Mi Perfil</a>
     
-    @if(Auth::user()->role === 'admin')
-        <a href="{{ route('admin.products.index') }}" class="nav-link">Panel Admin</a>
-    @endif
+    
 
     <form method="POST" action="{{ route('logout') }}" style="display:inline;">
         @csrf
@@ -64,14 +62,10 @@
         @endif
 
         <section class="featured-products">
-            <div class="container">
-                <h2>Novetats</h2>
-                <div class="product-grid">
-                    <div class="product-card">
-            {{ $slot }}
-            </div>
-                </div>
+    <div class="container">
+        {{ $slot }}
     </div>
+</section>
 </main>
     <footer class="main-footer">
         <div class="container footer-grid">
