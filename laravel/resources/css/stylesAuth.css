@@ -2,25 +2,25 @@
 
 /* --- CONFIGURACIÓN GENERAL --- */
 body {
-    background-color: #fcfcfc; /* Fondo beige muy suave */
+    background-color: #fcfcfc;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #222;
     margin: 0;
-    padding: 0;
+    padding: 40px 0;
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;     /* Centrado vertical */
-    min-height: 100vh;       /* Ocupa toda la altura de la pantalla */
+    justify-content: center;
+    align-items: flex-start; /* CAMBIO IMPORTANTE */
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
-/* --- TARJETA DE AUTENTICACIÓN --- */
 .auth-container {
     background-color: white;
     width: 100%;
-    max-width: 400px; /* Ancho contenido y elegante */
+    max-width: 400px;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Sombra suave de lujo */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.02);
     text-align: center;
 }

@@ -22,7 +22,7 @@
     <header class="header-exacto">
         <div class="header-logo-container">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('storage/products/logoParteArriba.png') }}" alt="Logo">
+                <img src="{{ asset('/contenido/logoParteArriba.png') }}" alt="Logo">
             </a>
         </div>
 
