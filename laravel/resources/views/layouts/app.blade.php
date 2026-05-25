@@ -62,6 +62,11 @@
         @endif
 
         <section class="featured-products">
+            @if (request()->is('/'))
+            <h2>Novetats</h2>
+            @else
+            <h2>Descobreix la nostra gama de productes</h2>
+            @endif
     <div class="container">
         {{ $slot }}
     </div>
