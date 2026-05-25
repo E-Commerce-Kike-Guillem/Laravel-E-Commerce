@@ -28,23 +28,25 @@
 
         <div class="header-right-side">
             <nav class="nav-links-clean">
-                <a href="/productes">Productes</a>
-                <a href="{{ route('sobre-nosaltres') }}" class="nav-link">Sobre Nosaltres</a>
-                <a href="contacte.php">Contacte</a>
+                <a class="nav-link" href="/productes">Productes</a>
+                <a class="nav-link" href="{{ route('sobre-nosaltres') }}">Sobre nosaltres</a>
+                <a class="nav-link" href="contacte.php">Contacte</a>
                 @auth
-    <a href="{{ route('profile.edit') }}">Mi Perfil</a>
+@else
+    <a href="{{ route('login') }}" class="nav-link">Iniciar Sesión</a>
+@endauth
+
+@auth
+    <a href="{{ route('profile.edit') }}" class="nav-link">Mi Perfil</a>
     
     @if(Auth::user()->role === 'admin')
-        <a href="{{ route('admin.products.index') }}">Panel Admin</a>
+        <a href="{{ route('admin.products.index') }}" class="nav-link">Panel Admin</a>
     @endif
 
     <form method="POST" action="{{ route('logout') }}" style="display:inline;">
         @csrf
-        <button type="submit">Cerrar Sesión</button>
+        <button type="submit" class="nav-link">Cerrar Sesión</button>
     </form>
-@else
-    <a href="{{ route('login') }}">Iniciar Sesión</a>
-    <a href="{{ route('register') }}">Registrarse</a>
 @endauth
         </div>
     </header>

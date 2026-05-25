@@ -9,24 +9,45 @@
     --header-height: 120px;
 }
 
-main {
-    flex: 1; /* Ocupa todo el espacio sobrante disponible */
-    width: 100%; /* Asegura que ocupe todo el ancho */
-}
-
 body {
     background-color: var(--color-bg);
     font-family: var(--font-main);
     color: var(--color-text);
     margin: 0;
     padding: 0;
-    /* Espai estàndard per a totes les pàgines perquè el header no tapi res */
     padding-top: 120px; 
-    min-height: 100vh;       /* Fuerza al cuerpo a medir al menos el 100% de la pantalla */
-    display: flex;           /* Activa el modo flexible */
-    flex-direction: column;  /* Organiza los elementos en columna (arriba a abajo) */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+main {
+    flex: 1;
+    width: 100%;
+}
+
+/* --- ESTILO UNIFICADO PARA ENLACES Y BOTONES DE NAVEGACIÓN --- */
+.nav-link {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #333;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: #000;
+}
+
+/* Base general */
 a { text-decoration: none; color: inherit; transition: color 0.2s; }
 ul { list-style: none; margin: 0; padding: 0; }
 img { max-width: 100%; display: block; }
@@ -56,10 +77,10 @@ img { max-width: 100%; display: block; }
 .header-right-side {
     display: flex;
     align-items: center;
-    gap: 40px; /* Separació entre menú i icones */
+    gap: 40px;
 }
 
-/* Menú Centrat (Absolut) */
+/* Menú Centrat */
 .nav-links-clean {
     position: absolute;
     left: 50%;
@@ -69,25 +90,9 @@ img { max-width: 100%; display: block; }
     gap: 30px;
 }
 
-.nav-links-clean a {
-    font-family: var(--font-ui);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    color: #333;
-}
-
-.nav-links-clean a:hover { color: #000; }
-
-.header-icons-clean {
-    display: flex;
-    gap: 20px;
-    font-size: 18px;
-}
-
 /* --- 3. FOOTER UNIFICAT --- */
 .main-footer {
-    background-color: #243020; /* Verd fosc corporatiu */
+    background-color: #243020;
     color: white;
     padding: 60px 0;
     margin-top: 80px;
