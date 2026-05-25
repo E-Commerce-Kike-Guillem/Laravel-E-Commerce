@@ -1,64 +1,210 @@
-# 🛒 Projecte Laravel E-Commerce - Sprint 3
+# Proyecto E-Commerce (Laravel)
 
-Aquest repositori conté la implementació del backend i el sistema d'administració per a la plataforma e-commerce, desenvolupat amb Laravel 11.
 
----
+## Descripción
 
-## 🏗️ C1 - Creació i Configuració de l'Entorn
-* **Framework:** S'ha inicialitzat un projecte Laravel 11 a la carpeta `/laravel`.
-* **MySQL:** L'aplicació utilitza una base de dades MySQL compartida. S'ha configurat el fitxer `.env` amb les credencials corresponents.
-* **Docker/Sail:** S'ha utilitzat **Laravel Sail** com a stack de contenidors, facilitant un entorn homogeni amb PHP 8.3 i MySQL.
+### ¿Qué es E-Commerce Laravel?
 
-## 📊 C2 - Model de Dades i Migracions
-* **Taula Products:** S'ha creat la migració amb els camps `sku` (índex únic), `name`, `description`, `price`, `stock`, `image` i `category`.
-* **Taula Users:** S'ha estès la taula d'usuaris per defecte per incloure el camp `role` (amb valors 'user' o 'admin'), permetent el control d'accessos.
-* **Seeders:** S'ha implementat un `ProductSeeder` per carregar dades inicials i verificar el llistat de l'API.
+Es una plataforma de comercio electrónico desarrollada íntegramente con el framework Laravel. Este proyecto gestiona:
 
-## 🔐 C3 - Autenticació amb Laravel Breeze
-* **Sistema:** S'ha instal·lat **Laravel Breeze** (versió Blade) per gestionar el registre i login d'usuaris.
-* **Assets:** La compilació de CSS i JS es realitza mitjançant **Vite**.
-* **Nota Comparativa:** A diferència de l'autenticació manual de l'Sprint 2 basada en gestió directa de cookies i sessions PHP pur, Breeze implementa un flux segur mitjançant **Eloquent** i **Middlewares**, centralitzant la protecció de rutes i el hashing de contrasenyes (Bcrypt) de forma nativa.
+* Catálogo completo de productos
+* Gestión de usuarios (registro, login, perfiles)
+* Administración de productos
+* Importación de datos desde un sistema legacy en PHP plano
 
-## 📥 C4 - Importació de Productes des d'Excel
-* **Dependència:** S'utilitza la llibreria `maatwebsite/excel`.
-* **Funcionalitat:** S'ha creat un controlador que processa la pujada de fitxers `.xlsx`. 
-* **Lògica:** S'utilitza la classe `ProductsImport` que valida dades obligatòries i executa un `updateOrCreate` basat en l'SKU, permetent tant la creació com l'actualització massiva de stock i preus.
-* **Feedback:** El sistema registra el nombre de files processades i gestiona errors de format de forma amigable.
+### ¿Por qué lo usamos/desarrollamos?
 
-## 🔌 C5 - API REST de Productes
-* **Rutes:** Disponibles a `routes/api.php` per a consulta pública.
-* **Endpoints:** - `GET /api/products`: Retorna el llistat complet de productes (JSON). Admet paràmetres de cerca.
-    - `GET /api/products/{id}`: Retorna el detall d'un producte específic.
-* **Resources:** S'ha implementat `ProductResource` per normalitzar la sortida de dades (preus amb 2 decimals, rutes d'imatge absolutes, etc.).
-* **Nota futur:** En l'Sprint 4, una aplicació SPA amb Vue.js consumirà aquests endpoints.
+Este proyecto se desarrolla para establecer una **arquitectura robusta, escalable y mantenible** utilizando metodologías ágiles.
 
-## 🔒 C6 - CRUD d'Administració (Backoffice)
-* **Accés Restringit:** S'ha creat un Middleware (`AdminMiddleware`) que verifica el camp `role` de l'usuari autenticat. L'accés a les rutes `/admin/*` està limitat exclusivament a administradors.
-* **Funcionalitats:**
-    - Llistat de productes importats.
-    - Formulari de creació manual de productes.
-    - Edició i actualització de dades existents (nom, preu, stock).
-* **Vistes:** Implementades amb Blade i Tailwind CSS sense dependències de JS extern.
+La finalidad principal es disponer de una tienda online completa que ponga en práctica:
 
-## ✅ C7 - Tests Automatitzats
-S'ha validat la robustesa del sistema mitjançant tests de funcionalitat (Feature Tests).
+* Patrón MVC
+* Protección de rutas mediante middleware (ej. panel de administrador)
+* Uso de bases de datos relacionales con migraciones y seeders
+* Despliegue estructurado utilizando contenedores Docker
 
-### Resum d'Evidències:
-| Prova | Objectiu | Resultat |
-| :--- | :--- | :--- |
-| **API List** | Validar que `/api/products` retorna JSON 200 i estructura correcta. | **PASS** ✅ |
-| **API Detail** | Validar que es mostra el detall d'un producte pel seu ID. | **PASS** ✅ |
-| **Guest Security** | Comprovar que els convidats són redirigits al login. | **PASS** ✅ |
-| **Role Security** | Comprovar que un usuari 'user' rep un 403 en l'àrea admin. | **PASS** ✅ |
-| **Admin Access** | Validar que l'admin (role='admin') pot gestionar productes. | **PASS** ✅ |
-| **Excel Import** | Simular la pujada d'un fitxer i validar la seua càrrega. | **PASS** ✅ |
+También sirve como demostración práctica del módulo **Despliegue de Aplicaciones Web (DAW)**.
 
 ---
 
-### 🛠️ Com executar el projecte
-1. Entrar a la carpeta: `cd laravel`
-2. Arrencar contenidors: `./vendor/bin/sail up -d`
-3. Instal·lar dependències: `./vendor/bin/sail composer install && ./vendor/bin/sail npm install`
-4. Preparar BBDD: `./vendor/bin/sail artisan migrate --seed`
-5. Vincular fitxers: `./vendor/bin/sail artisan storage:link`
-6. Executar tests: `./vendor/bin/sail artisan test`
+## Tabla de Contenidos
+
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Puesta en marcha](#puesta-en-marcha)
+- [Entornos](#entornos)
+- [Guía de Contribución](#guía-de-contribución)
+- [Documentación de desarrollo](#documentación-de-desarrollo)
+- [Lista de Contribuidores](#lista-de-contribuidores)
+- [Inspiración](#inspiración)
+- [Licencia](#licencia)
+
+---
+
+## Tecnologías utilizadas
+
+### Backend
+
+* PHP 8.x
+* Laravel 11.x
+
+### Frontend
+
+* Blade
+* TailwindCSS
+* Vite
+* JavaScript
+
+### Base de datos
+
+* MySQL / SQLite
+* Gestionado con migraciones de Laravel
+
+### Testing
+
+* Pest
+* PHPUnit
+
+### Infraestructura y despliegue
+
+* Docker
+* Docker Compose (incluye entorno de desarrollo con `compose.yaml`)
+
+### Control de versiones
+
+* Git
+* GitHub
+
+---
+
+## Puesta en marcha
+
+Para ejecutar este proyecto en tu entorno local:
+
+### Requisitos previos
+
+* PHP >= 8.2
+* Composer
+* Node.js y npm
+* Docker (opcional pero recomendado)
+
+---
+
+### Instalación
+
+#### 1. Clona el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/laravel-e-commerce.git
+cd laravel-e-commerce/laravel
+```
+
+#### 2. Instala dependencias
+
+```bash
+composer install
+npm install
+```
+
+#### 3. Configura variables de entorno
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+#### 4. Levanta base de datos y servicios (Docker)
+
+```bash
+docker-compose up -d
+```
+
+#### 5. Ejecuta migraciones y seeders
+
+```bash
+php artisan migrate --seed
+```
+
+#### 6. Compila assets e inicia servidor
+
+```bash
+npm run dev
+php artisan serve
+```
+
+---
+
+## Entornos
+
+### Desarrollo
+
+Entorno local en la máquina de cada desarrollador:
+
+```
+http://localhost:8000
+```
+
+### Producción
+
+Añadir URL de la plataforma desplegada, por ejemplo:
+
+```
+https://ecommerce-ejemplo.com
+```
+
+---
+
+## Guía de Contribución
+
+Para contribuir al proyecto:
+
+1. Lee la documentación del flujo de trabajo antes de subir código
+2. Abre un **Issue** describiendo el bug o mejora
+3. Crea una rama desde main:
+
+```bash
+git checkout -b feature/nombre-de-la-mejora
+```
+
+4. Haz commits lógicos, atómicos y descriptivos
+5. Sube tus cambios y abre un Pull Request
+6. El código debe pasar los tests:
+
+```bash
+php artisan test
+```
+
+---
+
+## Documentación de desarrollo
+
+Toda la documentación relacionada con:
+
+* Gantt
+* Sprints
+* Riesgos Laborales
+
+se encuentra en la carpeta:
+
+```
+/Documentació
+```
+
+También disponible en la **Wiki del proyecto**.
+
+---
+
+## Lista de Contribuidores
+
+*(Añadir aquí los colaboradores del proyecto)*
+
+---
+
+## Inspiración
+
+*(Añadir referencias o proyectos similares si procede)*
+
+---
+
+## Licencia
+
+Este proyecto se distribuye bajo los términos de la **Licencia MIT** incluida en el repositorio.
