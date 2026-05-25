@@ -15,6 +15,24 @@ class ProductImportController extends Controller
         return view('admin.import');
     }
 
+    public function import(Request $request)
+    {
+        // Validar que el archivo ha sido subido
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv,xls',
+        ]);
+
+        try {
+            // Realizar la importación usando la clase ProductsImport
+            Excel::import(new ProductsImport, $request->file('file'));
+
+            return back()->with('success', 'Productes importats correctament!');
+        } catch (\Exception $e) {
+            Log::error("Error en la importació: " . $e->getMessage());
+            return back()->with('error', 'Error en importar el fitxer: ' . $e->getMessage());
+        }
+    }
+
     // 2. Processar l'Excel
     public function store(Request $request)
     {

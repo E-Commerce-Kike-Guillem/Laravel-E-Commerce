@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => Hash::make('password'), // Asegúrate de esto
-            'role' => 'user', // Asegúrate de incluirlo si es requerido
+            'role' => 'admin', // Asegúrate de incluirlo si es requerido
         ]);
     }
 }

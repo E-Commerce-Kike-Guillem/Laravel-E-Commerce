@@ -31,7 +31,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('import.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.products.import.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Selecciona Excel (.xlsx)</label>
