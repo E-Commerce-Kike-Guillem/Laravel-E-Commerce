@@ -14,7 +14,11 @@ Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/productes', [ProductController::class, 'index'])->name('productes.index');
 // Si tienes un detalle de producto:
 Route::get('/productes/{product}', [ProductController::class, 'show'])->name('productes.show');
+Route::get('/productes', [ProductAdminController::class, 'index'])->name('productes.index');
 
+Route::get('/sobre-nosaltres', function () {
+        return view('sobre-nosaltres.index');
+    })->name('sobre-nosaltres');
 /**
  * RUTAS DE AUTENTICACIÓN
  */
@@ -35,9 +39,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/sobre-nosaltres', function () {
-        return view('sobre-nosaltres');
-    })->name('sobre-nosaltres');
 
     });
 
@@ -46,7 +47,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
  */
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     
-    Route::get('/productes', [ProductAdminController::class, 'index'])->name('productes.index');
     Route::get('/productes/{product}/edit', [ProductAdminController::class, 'edit'])->name('productes.edit');
     Route::put('/productes/{product}', [ProductAdminController::class, 'update'])->name('productes.update');
     Route::get('/import', [ProductImportController::class, 'show'])->name('import.show');

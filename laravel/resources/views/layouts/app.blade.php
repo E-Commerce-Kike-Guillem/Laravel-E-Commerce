@@ -21,7 +21,7 @@
 <body>
     <header class="header-exacto">
         <div class="header-logo-container">
-            <a href="index.php">
+            <a href="{{ route('home') }}">
                 <img src="{{ asset('storage/products/logoParteArriba.png') }}" alt="Logo">
             </a>
         </div>
