@@ -1,36 +1,103 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Per L'Art - Joieria</title>
+    
+    @vite([
+    'resources/css/app.css', 
+    'resources/js/app.js',
+    'resources/css/common.css',
+    'resources/css/styleIndex.css'
+    ])
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <header class="header-exacto">
+        <div class="header-logo-container">
+            <a href="index.php">
+                <img src="{{ asset('storage/products/logoParteArriba.png') }}" alt="Logo">
+            </a>
         </div>
-    </body>
+
+        <div class="header-right-side">
+            <nav class="nav-links-clean">
+                <a href="/productes">Productes</a>
+                <a href="#">Sobre nosaltres</a>
+                <a href="contacte.php">Contacte</a>
+                @auth
+    <a href="{{ route('profile.edit') }}">Mi Perfil</a>
+    
+    @if(Auth::user()->role === 'admin')
+        <a href="{{ route('admin.products.index') }}">Panel Admin</a>
+    @endif
+
+    <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+        @csrf
+        <button type="submit">Cerrar Sesión</button>
+    </form>
+@else
+    <a href="{{ route('login') }}">Iniciar Sesión</a>
+    <a href="{{ route('register') }}">Registrarse</a>
+@endauth
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Descobreix Peces Úniques</h1>
+                <p>La nostra nova col·lecció inspirada en la cultura popular.</p>
+                <a href="storage/products/hero.jpg" class="btn btn-primary">Explora la Col·lecció</a>
+            </div>
+            <div class="hero-background-image"></div>
+        </section>
+
+        <section class="featured-products">
+            <div class="container">
+                <h2>Novetats</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+            {{ $slot }}
+            </div>
+                </div>
+    </div>
+</main>
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            
+            <div class="footer-logo">
+                <a href="#"><img src="./contenido/log_blanc.png" alt="Logo" lin></a>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Informació</h4>
+                <a href="#">Informació legal</a>
+                <a href="#">Política de devolucions</a>
+                <a href="#">Política de cookies</a>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contacte</h4>
+                <p>Telèfon: 122 884 2887</p>
+                <a href="#">Sobre nosaltres</a>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Segueix-nos</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
 </html>
