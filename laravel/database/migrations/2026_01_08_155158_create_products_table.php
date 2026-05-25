@@ -19,7 +19,7 @@ return new class extends Migration
         $table->decimal('price', 10, 2); // 10 dígits total, 2 decimals
         $table->integer('stock')->default(0);
         $table->string('image')->nullable(); // Ruta de la imatge
-        // $table->string('category')->nullable(); // Opcional segons l'enunciat
+        $table->string('category')->nullable(); // Opcional segons l'enunciat
         $table->timestamps(); // created_at i updated_at automàtics
     });
 }
