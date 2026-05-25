@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <link rel="icon" href="{{ asset('/contenido/log_blanc.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -77,7 +77,7 @@
         <div class="container footer-grid">
             
             <div class="footer-logo">
-                <a href="#"><img src="./contenido/log_blanc.png" alt="Logo" lin></a>
+                <a href="{{ route('home') }}"><img src="./contenido/log_blanc.png" alt="Logo" lin></a>
             </div>
             
             <div class="footer-column">
