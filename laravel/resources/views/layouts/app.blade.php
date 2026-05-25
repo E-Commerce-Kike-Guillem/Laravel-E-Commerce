@@ -29,7 +29,7 @@
         <div class="header-right-side">
             <nav class="nav-links-clean">
                 <a href="/productes">Productes</a>
-                <a href="#">Sobre nosaltres</a>
+                <a href="{{ route('sobre-nosaltres') }}" class="nav-link">Sobre Nosaltres</a>
                 <a href="contacte.php">Contacte</a>
                 @auth
     <a href="{{ route('profile.edit') }}">Mi Perfil</a>
@@ -50,6 +50,7 @@
     </header>
 
     <main>
+        @if (request()->is('/'))
         <section class="hero">
             <div class="hero-content">
                 <h1>Descobreix Peces Úniques</h1>
@@ -58,6 +59,7 @@
             </div>
             <div class="hero-background-image"></div>
         </section>
+        @endif
 
         <section class="featured-products">
             <div class="container">

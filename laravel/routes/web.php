@@ -35,4 +35,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 });
 
+Route::get('/sobre-nosaltres', function () {
+    return view('sobre-nosaltres');
+})->name('sobre-nosaltres');
+
 require __DIR__.'/auth.php';
