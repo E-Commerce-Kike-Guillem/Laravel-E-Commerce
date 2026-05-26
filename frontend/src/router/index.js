@@ -1,22 +1,31 @@
-// src/router/index.js
-import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue'; // Asegúrate de tener este archivo
-import ProductsView from '../views/ProductsView.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { 
-      path: '/', 
-      name: 'home', 
-      component: HomeView 
+    {
+      path: '/',
+      name: 'Home',
+      component: HomeView
     },
-    { 
-      path: '/products', 
-      name: 'products', 
-      component: () => import('../views/ProductsView.vue') // Lazy loading (recomendado)
+    {
+      path: '/products',
+      name: 'Products',
+      // Suponiendo que ya existe ProductsView.vue
+      component: () => import('../views/ProductsView.vue') 
+    },
+    {
+      path: '/product/:id',
+      name: 'ProductShow',
+      component: () => import('../views/ProductShow.vue')
+    },
+    {
+      path: '/admin/product/:id/edit',
+      name: 'ProductEdit',
+      component: () => import('../views/ProductEdit.vue')
     }
   ]
-});
+})
 
-export default router;
+export default router

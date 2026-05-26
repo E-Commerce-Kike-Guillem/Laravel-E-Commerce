@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './common.css';
+@import './styleIndex.css';
+@import './stylesAuth.css';
+@import './stylesContact.css';
+@import './stylesDetalle.css';
+@import './stylesProductes.css';

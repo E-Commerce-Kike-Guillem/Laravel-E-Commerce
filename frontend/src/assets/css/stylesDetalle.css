@@ -1,0 +1,315 @@
+/* Responsive Header */
+@media (max-width: 950px) {
+    body { padding-top: 0; } /* En mòbil treiem el padding fix */
+    
+    .header-exacto { 
+        position: relative; /* Deixa de ser fix en pantalles petites */
+        height: auto;
+        flex-direction: column; 
+        padding: 20px; 
+        gap: 20px;
+    }
+    .nav-links-clean {
+        position: static; /* Tornem al flux normal */
+        transform: none;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    .header-right-side { width: 100%; justify-content: center; }
+}
+
+
+/* --- CONTENEDOR DETALL --- */
+.detail-wrapper {
+    max-width: 1100px;
+    margin: 0 auto; /* Ja tenim padding-top al body, no cal margin-top gran */
+    padding: 0 20px 50px 20px;
+}
+
+/* --- FITXA DE PRODUCTE --- */
+.product-detail-card {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 80px;
+    align-items: flex-start;
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    /* Opcional: Ombra per destacar la fitxa sobre el fons beix */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+
+.detail-image {
+    flex: 1;
+}
+
+.detail-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.detail-title {
+    font-family: 'Georgia', serif;
+    font-size: 2.2rem;
+    color: #222;
+    margin: 0 0 10px 0;
+    font-weight: normal;
+}
+
+.detail-sku {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.detail-price {
+    font-family: 'Georgia', serif;
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+.detail-desc {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.btn-add-cart {
+    background-color: #3b7da3;
+    color: white;
+    border: none;
+    padding: 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.btn-add-cart:hover {
+    background-color: #2a375a;
+}
+
+/* --- SECCIÓ COMENTARIS --- */
+.comments-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.comments-section h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #222;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.comment {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #eaeaea;
+}
+
+.comment-header {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    color: #333;
+}
+
+.comment-date {
+    font-weight: normal;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.comment-body {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+
+
+/* Responsive Ficha */
+@media (max-width: 768px) {
+    .product-detail-card { 
+        flex-direction: column; 
+        gap: 30px; 
+        padding: 20px;
+    }
+}
+
+.comment-form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    border: 1px solid #eaeaea; /* Borde muy suave */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Sombra sutil */
+}
+
+.comment-form-container h3 {
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #222;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+/* Filas del formulario */
+.form-row {
+    margin-bottom: 20px;
+}
+
+.form-row label {
+    display: block;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Campos de texto y select */
+.input-comment, 
+.select-rating {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-comment:focus, 
+.select-rating:focus {
+    outline: none;
+    border-color: #333;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+.input-comment {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Botón de publicar */
+.btn-submit-comment {
+    background-color: #222;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.btn-submit-comment:hover {
+    background-color: #000;
+    transform: translateY(-2px);
+}
+
+.btn-submit-comment:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Aviso para iniciar sesión */
+.login-notice {
+    background-color: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px dashed #ccc;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.login-notice a {
+    color: #222;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.btn-like {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem; /* Tamaño del corazón */
+    color: #ccc;       /* Gris por defecto (desmarcado) */
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+/* Cuando está marcado (Clase que pone JS) */
+.btn-like.liked {
+    color: #e31b23 !important; /* Rojo intenso */
+    transform: scale(1.1);     /* Un pequeño efecto de "latido" */
+}
+
+.btn-like:hover {
+    color: #ff6b6b; /* Rojo suave al pasar el ratón */
+}
+
+.btn-like:hover {
+    border-color: #ff4757;
+    color: #ff4757;
+}
+
+/* Clase cuando está activo (Like dado) */
+.btn-like.liked {
+    background-color: #ff4757;
+    border-color: #ff4757;
+    color: white;
+}
+
+.btn-delete-comment {
+    background: none;
+    border: none;
+    color: #d9534f; /* Rojo */
+    cursor: pointer;
+    font-size: 0.9rem;
+    float: right; /* A la derecha del comentario */
+}
+.btn-delete-comment:hover { text-decoration: underline; }
