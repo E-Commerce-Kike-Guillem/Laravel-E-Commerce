@@ -1,6 +1,5 @@
 <template>
   <div class="home-container">
-    <Navbar />
     
     <Hero />
 
@@ -22,7 +21,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '../services/http' // Tu cliente HTTP ya configurado
-import Navbar from '../components/Navbar.vue'
 import Hero from '../components/Hero.vue'
 import ProductCard from '../components/ProductCard.vue'
 

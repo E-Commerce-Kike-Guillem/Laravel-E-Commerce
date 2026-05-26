@@ -1,38 +1,52 @@
 <template>
-  <div class="register-container">
-    <h2>Crear un Compte</h2>
-    
-    <form @submit.prevent="handleRegister">
-      <div>
-        <label>Nom:</label>
-        <input type="text" v-model="form.name" required />
+  <div class="auth-wrapper">
+    <div class="auth-container">
+      
+      <div class="auth-logo">
+        <RouterLink to="/">
+          <img src="/contenido/logoParteArriba.png" alt="Logo Per L'Art">
+        </RouterLink>
       </div>
-      
-      <div>
-        <label>Email:</label>
-        <input type="email" v-model="form.email" required />
+
+      <h2>Crear Compte</h2>
+      <p class="subtitle">Uneix-te a la nostra comunitat</p>
+
+      <form @submit.prevent="handleRegister">
+        
+        <div class="form-group">
+          <label for="name">Nom *</label>
+          <input type="text" id="name" v-model="form.name" required autofocus>
+          <span v-if="errors.name" class="error-msg">{{ errors.name[0] }}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" v-model="form.email" required>
+          <span v-if="errors.email" class="error-msg">{{ errors.email[0] }}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contrasenya *</label>
+          <input type="password" id="password" v-model="form.password" required>
+          <span v-if="errors.password" class="error-msg">{{ errors.password[0] }}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="password_confirmation">Confirmar contrasenya *</label>
+          <input type="password" id="password_confirmation" v-model="form.password_confirmation" required>
+        </div>
+
+        <button type="submit" class="btn-auth" :disabled="loading">
+          {{ loading ? 'Registrant...' : 'Registrar-se' }}
+        </button>
+
+      </form>
+
+      <div class="auth-footer">
+        <p>Ja tens compte? <RouterLink to="/login">Inicia sessió</RouterLink></p>
       </div>
-      
-      <div>
-        <label>Contrasenya:</label>
-        <input type="password" v-model="form.password" required />
-      </div>
-      
-      <div>
-        <label>Confirmar Contrasenya:</label>
-        <input type="password" v-model="form.password_confirmation" required />
-      </div>
-      
-      <button type="submit" :disabled="loading">
-        {{ loading ? 'Creant compte...' : 'Registrar-se' }}
-      </button>
-      
-      <ul v-if="Object.keys(errors).length > 0" class="error-list">
-        <li v-for="(errorArray, field) in errors" :key="field">
-          {{ errorArray[0] }}
-        </li>
-      </ul>
-    </form>
+
+    </div>
   </div>
 </template>
 
@@ -60,9 +74,8 @@ const handleRegister = async () => {
   
   try {
     await authStore.register(form.value);
-    router.push('/products'); // Redirigimos al catálogo tras registrarnos
+    router.push('/products');
   } catch (error) {
-    // Si Laravel devuelve un error de validación (Status 422)
     if (error.response && error.response.status === 422) {
       errors.value = error.response.data.errors;
     } else {
@@ -75,27 +88,22 @@ const handleRegister = async () => {
 </script>
 
 <style scoped>
-.register-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-div {
-  margin-bottom: 1rem;
-}
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-input {
+@import '../assets/css/stylesAuth.css';
+
+/* Mantenim el centre de la pantalla */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px);
   width: 100%;
-  padding: 0.5rem;
+  background-color: #f9fafb;
 }
-.error-list {
-  color: red;
-  margin-top: 1rem;
-  padding-left: 1.5rem;
+
+.error-msg {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  display: block;
 }
 </style>
