@@ -1,10 +1,10 @@
 <template>
   <main class="main-content">
-    <section class="hero" :style="{ backgroundImage: `url(${heroImage})` }">
+    <section class="hero">
             <div class="hero-content">
                 <h1>Descobreix Peces Úniques</h1>
                 <p>La nostra nova col·lecció inspirada en la cultura popular.</p>
-                <a class="btn btn-primary">Explora la Col·lecció</a>
+                <a href="../assets/contenido/hero.jpg" class="btn btn-primary">Explora la Col·lecció</a>
             </div>
             <div class="hero-background-image"></div>
         </section>
@@ -12,7 +12,6 @@
 </template>
 
 <script setup>
-import heroImage from '@/assets/contenido/hero_mod.jpg'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
