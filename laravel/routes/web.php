@@ -5,9 +5,13 @@ use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-/**
- * RUTAS PÚBLICAS
- */
+
+
+Route::get('/{any}', function () {
+    return view('spa');
+})->where('any', '.*');
+
+/*
 // La raíz ahora carga el índice de productos directamente
 Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/productes', [ProductController::class, 'index'])->name('productes.index');
@@ -17,14 +21,9 @@ Route::get('/productes/{product}', [ProductController::class, 'show'])->name('pr
 Route::get('/sobre-nosaltres', function () {
         return view('sobre-nosaltres.index');
     })->name('sobre-nosaltres');
-/**
- * RUTAS DE AUTENTICACIÓN
- */
+
 require __DIR__.'/auth.php';
 
-/**
- * RUTAS PROTEGIDAS (Usuarios logueados)
- */
 Route::middleware(['auth', 'verified'])->group(function () {
     
     // Perfil
@@ -40,9 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     });
 
-/**
- * RUTAS DE ADMINISTRACIÓN (Protegidas por middleware admin)
- */
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     
     Route::get('/productes/{product}/edit', [ProductAdminController::class, 'edit'])->name('productes.edit');
@@ -51,3 +48,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/import', [ProductImportController::class, 'store'])->name('import.store');
     Route::post('/import', [ProductImportController::class, 'import'])->name('products.import.store');
 });
+*/
