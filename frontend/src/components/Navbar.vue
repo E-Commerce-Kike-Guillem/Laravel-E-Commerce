@@ -1,27 +1,32 @@
+<script setup>
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/authStore';
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleLogout = async () => {
+  await authStore.logout();
+  router.push('/login');
+};
+</script>
+
 <template>
   <nav class="mi-navbar">
     <RouterLink to="/">Inicio</RouterLink>
     <RouterLink to="/products">Productos</RouterLink>
-    
-    <RouterLink to="/login" v-if="!isAuthenticated">Login</RouterLink>
-    <button v-else @click="logout">Sortir</button>
+
+    <template v-if="authStore.isAuthenticated">
+      <span class="user-greeting">Hola, {{ authStore.user.name }}</span>
+      <button @click="handleLogout">Sortir</button>
+    </template>
+    <template v-else>
+      <RouterLink to="/login">Login</RouterLink>
+    </template>
   </nav>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-// Variable reactiva falsa para que la página cargue (luego usaremos Pinia)
-const isAuthenticated = ref(false);
-
-const logout = () => {
-  isAuthenticated.value = false;
-  console.log('Saliendo...');
-};
-</script>
-
 <style scoped>
-/* Un poco de CSS básico para que la navbar se vea decente */
 .mi-navbar {
   display: flex;
   gap: 1rem;
