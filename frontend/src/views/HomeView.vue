@@ -6,27 +6,35 @@
       <h2 class="page-title text-center mb-10">Productes Destacats</h2>
       
       <section class="showcase">
-  <div v-for="product in featuredProducts" :key="product.id" class="producte-minimal">
-    
-    <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
-    
-    <div class="prod-row-top">
-      <h3 class="prod-name">{{ product.name }}</h3>
-      <button class="btn-cart-icon" @click="addToCart(product)">
-        <i class="fas fa-shopping-basket"></i>
-      </button>
-    </div>
-    
-    <p class="prod-price">{{ product.price }} €</p>
+        
+        <div class="product-card" v-for="product in featuredProducts" :key="product.id">
+          
+          <div class="product-image">
+            <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p class="product-price">{{ product.price }} €</p>
+            
+            <div class="product-actions">
+              <RouterLink :to="`/product/${product.id}`" class="btn-details-clean">
+                Veure més
+              </RouterLink>
+              
+              <button 
+                class="btn-cart-icon" 
+                @click="addToCart(product)"
+                title="Afegir al carret" 
+              >
+                <i class="fas fa-shopping-basket"></i>
+              </button>
+            </div>
+          </div>
+          
+        </div>
 
-    <div class="mt-3">
-      <RouterLink :to="`/productes/${product.id}`" class="btn-details-clean">
-        Veure detalls
-      </RouterLink>
-    </div>
-    
-  </div>
-</section>
+      </section>
     </main>
   </div>
 </template>
@@ -47,7 +55,7 @@ const fetchFeaturedProducts = async () => {
     const response = await api.get('/products')
     const allProducts = response.data.data || response.data
     
-    // Lógica para 3 aleatorios
+    // Seleccionamos 3 aleatorios
     featuredProducts.value = allProducts
       .sort(() => 0.5 - Math.random())
       .slice(0, 3)
@@ -62,14 +70,77 @@ onMounted(fetchFeaturedProducts)
 <style scoped>
 @import '@/assets/css/stylesProductes.css';
 
-/* Assegurem l'estil del botó de detalls */
+.page-content-wrapper {
+  width: 100%;
+}
+
+.showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left; 
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.product-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.product-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6; 
+  width: 100%;
+}
+
 .btn-details-clean {
   text-decoration: none; 
   color: #555; 
-  font-weight: 500;
+  font-weight: 600;
+  padding-left: 0; 
   transition: color 0.2s;
-  display: inline-block;
-  margin-top: 10px;
+  font-size: 0.95rem;
 }
 
 .btn-details-clean:hover {
@@ -77,11 +148,27 @@ onMounted(fetchFeaturedProducts)
   text-decoration: underline; 
 }
 
-/* Espaiat del grid */
-.showcase {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-top: 20px;
+.btn-cart-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; 
+  flex: 0 0 40px;
+  background-color: #243020; 
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-cart-icon:hover {
+  transform: scale(1.05);
+}
+
+.btn-cart-icon i {
+  font-size: 1.1rem;
 }
 </style>
