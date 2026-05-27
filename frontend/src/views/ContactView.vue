@@ -13,33 +13,30 @@
           <h3>Contacta amb nosaltres</h3>
           
           <label for="name">Nom *</label>
-          <input type="text" id="name" v-model="form.name" required>
+          <input type="text" id="name" v-model="form.name" :class="{ 'input-error': errors.name }" required>
+          <span v-if="errors.name" class="error-text">{{ errors.name }}</span>
 
           <label for="email">Correu electrònic *</label>
-          <input type="email" id="email" v-model="form.email" required>
+          <input type="email" id="email" v-model="form.email" :class="{ 'input-error': errors.email }" required>
+          <span v-if="errors.email" class="error-text">{{ errors.email }}</span>
 
           <label for="message">Missatge *</label>
-          <textarea id="message" v-model="form.message" required></textarea>
+          <textarea id="message" v-model="form.message" :class="{ 'input-error': errors.message }" required></textarea>
+          <span v-if="errors.message" class="error-text">{{ errors.message }}</span>
 
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <div class="checkbox-group">
             <input type="checkbox" id="privacyPolicy" v-model="form.privacyPolicy" required>
-            <label for="privacyPolicy" style="margin: 0;">He llegit i accepte la política de privacitat *</label>
+            <label for="privacyPolicy">He llegit i accepte la política de privacitat *</label>
           </div>
+          <span v-if="errors.privacyPolicy" class="error-text mb-3">{{ errors.privacyPolicy }}</span>
 
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <div class="checkbox-group mb-4">
             <input type="checkbox" id="skipValidation" v-model="form.skipValidation">
-            <label for="skipValidation" style="margin: 0;">Desactivar validació en client (per a proves)</label>
+            <label for="skipValidation">Desactivar validació en client (per a proves)</label>
           </div>
 
           <button type="submit" class="btn">Enviar</button>
         </form>
-
-        <div v-if="errors.length > 0" class="server-errors mt-4">
-          <h3>S'han trobat errors:</h3>
-          <ul>
-            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-          </ul>
-        </div>
       </div>
       
     </div>
@@ -48,6 +45,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import * as yup from 'yup';
 
 const form = ref({
   name: '',
@@ -57,39 +55,57 @@ const form = ref({
   skipValidation: false
 });
 
-const errors = ref([]);
+// ¡CAMBIO!: Ahora errors es un objeto, no un array
+const errors = ref({}); 
 const enviado = ref(false);
 
-const handleSubmit = () => {
-  errors.value = [];
+const schema = yup.object({
+  name: yup.string()
+    .trim()
+    .required('El nom és obligatori.'),
+  
+  email: yup.string()
+    .trim()
+    .required('El correu electrònic és obligatori.')
+    .email('Introdueix un correu electrònic vàlid.'),
+  
+  message: yup.string()
+    .trim()
+    .required('El missatge és obligatori.')
+    .min(5, 'El missatge ha de tindre almenys 5 caràcters.'),
+  
+  privacyPolicy: yup.boolean()
+    .oneOf([true], "Has d'acceptar la política de privacitat.")
+});
 
-  if (!form.value.skipValidation) {
-    if (!form.value.name.trim()) {
-      errors.value.push("El nom és obligatori.");
-    }
-    
-    if (!form.value.email.trim()) {
-      errors.value.push("El correu electrònic és obligatori.");
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
-      errors.value.push("Introdueix un correu electrònic vàlid.");
-    }
-    
-    if (form.value.message.trim().length < 5) {
-      errors.value.push("El missatge ha de tindre almenys 5 caràcters.");
-    }
-    
-    if (!form.value.privacyPolicy) {
-      errors.value.push("Has d'acceptar la política de privacitat.");
-    }
+const handleSubmit = async () => {
+  // Limpiamos el objeto de errores en cada intento
+  errors.value = {};
+
+  if (form.value.skipValidation) {
+    enviado.value = true;
+    return;
   }
 
-  if (errors.value.length === 0) {
+  try {
+    await schema.validate(form.value, { abortEarly: false });
     enviado.value = true;
     
+  } catch (err) {
+    if (err.inner) {
+      // Mapeamos cada error de Yup a su campo correspondiente
+      const newErrors = {};
+      err.inner.forEach(error => {
+        // Yup nos da el nombre del campo en error.path
+        newErrors[error.path] = error.message; 
+      });
+      errors.value = newErrors;
+    } else {
+      console.error(err);
+    }
   }
 };
 </script>
-
 <style scoped>
 @import '@/assets/css/stylesContact.css';
 
@@ -105,16 +121,35 @@ const handleSubmit = () => {
   margin: 0 auto;
 }
 
-.server-errors {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  padding: 15px;
-  border-radius: 8px;
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
-.server-errors ul {
+.checkbox-group label {
   margin: 0;
-  padding-left: 20px;
+}
+
+/* --- NUEVOS ESTILOS DE ERROR --- */
+.input-error {
+  border: 2px solid #dc3545 !important; /* Borde rojo */
+  background-color: #fff8f8; /* Fondo ligeramente rojizo */
+  outline: none;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); /* Resplandor rojo al hacer clic */
+  border-color: #dc3545;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: block;
+  margin-top: -10px; /* Sube el texto para pegarlo al input */
+  margin-bottom: 15px; /* Empuja el siguiente campo hacia abajo */
 }
 </style>

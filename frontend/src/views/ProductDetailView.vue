@@ -12,13 +12,6 @@
       
       <div class="detail-info">
         <h1 class="detail-title">{{ product.name }}</h1>
-        
-        <div class="like-container">
-          <button id="btnLike" class="btn-like" @click="toggleLike">
-            <i :class="[isLiked ? 'fas' : 'far', 'fa-heart']"></i>
-          </button>
-          <span><span id="likeCount">{{ likeCount }}</span> persones els agrada</span>
-        </div>
 
         <p class="detail-sku">REF: {{ product.sku || 'GENERIC' }}</p>
         <div class="detail-price">{{ product.price }} €</div>
@@ -36,7 +29,7 @@
       
       <div v-if="authStore.isAuthenticated" class="comment-form-container">
         <h3>Deixa la teva opinió</h3>
-        <form @submit.prevent="submitComment">
+        <form @submit.prevent="handleCommentSubmit">
           <div class="form-row">
             <label for="puntuacio">Valoració:</label>
             <select id="puntuacio" v-model="commentForm.rating" class="select-rating">
@@ -99,7 +92,6 @@ import { useRoute } from 'vue-router';
 import { useAuthStore } from '../stores/authStore';
 import http from '../services/http';
 
-// 1. IMPORTAMOS NUESTRA LÓGICA DE COMENTARIOS
 import { useComments } from '../composables/useComments'; 
 
 const route = useRoute();
@@ -107,10 +99,8 @@ const authStore = useAuthStore();
 const product = ref(null);
 const loading = ref(true);
 
-// Datos exclusivos del formulario visual
 const commentForm = ref({ text: '', rating: 5 });
 
-// 2. EXTRAEMOS LAS FUNCIONES DEL ARCHIVO JS
 const { 
   comments, 
   loadingComments, 
@@ -123,13 +113,12 @@ const {
   formatDate 
 } = useComments(route.params.id);
 
-// Al cargar la página, pedimos el producto y los comentarios
 onMounted(async () => {
   try {
     const response = await http.get(`/products/${route.params.id}`);
     product.value = response.data.data || response.data;
     
-    await loadComments(); // Llamada a nuestra lógica externa
+    await loadComments();
   } catch (err) {
     console.error("Error:", err);
   } finally {
@@ -137,11 +126,9 @@ onMounted(async () => {
   }
 });
 
-// Función puente para enviar desde el formulario visual al archivo JS
 const handleCommentSubmit = async () => {
   const success = await submitComment(commentForm.value.text, commentForm.value.rating);
   if (success) {
-    // Si se envió bien, limpiamos la caja de texto
     commentForm.value.text = '';
     commentForm.value.rating = 5;
   }
