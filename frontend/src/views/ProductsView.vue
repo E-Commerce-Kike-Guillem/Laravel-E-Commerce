@@ -1,66 +1,168 @@
 <template>
-  <div class="products-container">
-    <h2>Llistat de Productes</h2>
+  <main class="page-content-wrapper">
+    <div class="catalog-container container my-5">
+      <h1 class="page-title text-left mb-5">Tots els productes:</h1>
 
-    <div v-if="loading">Connectant amb Laravel... ⏳</div>
+      <div v-if="loading" class="text-center">
+        <div class="spinner-border text-primary d-block mx-auto" role="status">
+          <span class="visually-hidden">Carregant...</span>
+        </div>
+      </div>
 
-    <div v-else-if="error" class="error">
-      ❌ {{ error }}
+      <div v-else-if="error" class="alert alert-danger text-center" role="alert">
+         {{ error }}
+      </div>
+
+      <section v-else class="showcase" id="lista-productos">
+        
+        <div class="product-card" v-for="product in products" :key="product.id">
+          
+          <div class="product-image">
+            <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p class="product-price">{{ product.price }} €</p>
+            
+            <div class="product-actions">
+  
+              <RouterLink :to="`/productes/${product.id}`" class="btn btn-link btn-details-clean">
+                Veure detalls
+              </RouterLink>
+              
+              <button 
+                class="btn btn-dark btn-cart-icon" 
+                @click="addToCart(product)"
+                title="Afegir al carret" 
+              >
+                <i class="fas fa-shopping-basket"></i>
+              </button>
+
+            </div>
+          </div>
+          
+        </div>
+
+      </section>
     </div>
-
-    <ul v-else>
-      <li v-for="product in products" :key="product.id">
-        <strong>{{ product.name }}</strong> - {{ product.price }} €
-        <br>
-        <small>{{ product.description }}</small>
-      </li>
-    </ul>
-  </div>
+  </main>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import http from '../services/http'; 
 
-// Variables reactivas
 const products = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-// Cuando el componente se monta en la pantalla, llamamos a la API
 onMounted(async () => {
   try {
-    // Hacemos la petición GET a Laravel
-    const response = await axios.get('http://localhost/api/products', {
-      withCredentials: true // Muy importante para CORS y futuras sesiones
-    });
+    const response = await http.get('/products');
     
-    // Como Laravel envía paginación y un Resource, los datos están dentro de response.data.data
-    products.value = response.data.data;
+    products.value = response.data.data || response.data;
   } catch (e) {
-    // Si la conexión falla, capturamos el error
-    error.value = "No s'ha pogut connectar amb l'API de Laravel. Revisa la consola (F12).";
-    console.error("Detalle del error:", e);
+    error.value = "No s'ha pogut connectar amb l'API de Laravel.";
+    console.error(e);
   } finally {
-    // Pase lo que pase, quitamos el mensaje de carga
     loading.value = false;
   }
 });
+
+const addToCart = (product) => {
+  console.log('Afegint al carret:', product.name);
+  alert(`${product.name} s'ha afegit al carret!`);
+};
 </script>
 
 <style scoped>
-.products-container {
-  padding: 2rem;
+@import '@/assets/css/stylesProductes.css';
+
+.page-content-wrapper {
+  width: 100%;
 }
-.error {
-  color: red;
-  font-weight: bold;
+
+.showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
 }
-li {
-  margin-bottom: 1rem;
-  list-style-type: none;
-  padding: 1rem;
-  border: 1px solid #ddd;
+
+.product-card {
+  border: 1px solid #eaeaea;
   border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
 }
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.product-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.btn-details-clean {
+  text-decoration: none; 
+  color: #555; 
+  font-weight: 500;
+  padding-left: 0; 
+  transition: color 0.2s;
+}
+
+.btn-details-clean:hover {
+  color: #000; 
+  text-decoration: underline; 
+}
+
+.btn-cart-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; 
+  flex: 0 0 45px; 
+}
+
+.btn-cart-icon i {
+  font-size: 1.2rem;
+  }
 </style>

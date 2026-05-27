@@ -104,7 +104,7 @@ img { max-width: 100%; display: block; }
     gap: 40px;
 }
 
-.footer-logo img { max-width: 160px; margin-bottom: 20px; }
+.footer-logo img { max-width: 190px; margin-bottom: 20px; }
 .footer-column { display: flex; flex-direction: column; }
 .footer-column h4 { font-size: 1.1rem; margin-bottom: 20px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
 .footer-column a, .footer-column p { color: #ccc; margin-bottom: 10px; font-size: 0.95rem; }
