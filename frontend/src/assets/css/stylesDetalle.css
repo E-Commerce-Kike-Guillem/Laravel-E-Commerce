@@ -92,7 +92,7 @@
 }
 
 .btn-add-cart {
-    background-color: #3b7da3;
+    background-color: #243020;
     color: white;
     border: none;
     padding: 18px;
@@ -104,10 +104,11 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
+    border-radius: 8px;
 }
 
 .btn-add-cart:hover {
-    background-color: #2a375a;
+    transform: scale(1.05);
 }
 
 /* --- SECCIÓ COMENTARIS --- */

@@ -98,6 +98,21 @@ const handleLogin = async () => {
   background-color: #f9fafb; /* Color de fons suau, canvia'l si el teu era un altre */
 }
 
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem; /* Un poco de aire por debajo para que no se pegue al título */
+}
+
+.auth-logo img {
+  display: block;
+  margin: 0 auto;
+  max-height: 70px; /* Evitamos que el logo se haga gigante */
+  width: auto;
+}
+
 /* 2. Afegim un estil extra per al missatge d'error de Vue (equivalent al x-input-error antic) */
 .error-alert {
   color: #721c24;
