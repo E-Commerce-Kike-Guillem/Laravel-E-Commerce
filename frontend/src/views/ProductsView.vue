@@ -27,7 +27,7 @@
             
             <div class="product-actions">
   
-              <RouterLink :to="`/productes/${product.id}`" class="btn btn-link btn-details-clean">
+              <RouterLink :to="`/product/${product.id}`" class="btn btn-link btn-details-clean">
                 Veure detalls
               </RouterLink>
               
