@@ -1,3 +1,10 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita barras de desplazamiento horizontales */
+}
+
 :root {
     --color-primary: #3b7da3;
     --color-footer-bg: #2a402a; 
@@ -71,44 +78,7 @@ h2 {
 }
 
 
-.hero {
-    position: relative; 
-    display: flex;
-    align-items: center;
-    min-height: 70vh;
-    overflow: hidden; 
-}
 
-.hero-content {
-    color: white;
-    flex: 1;
-    z-index: 2;
-    padding-right: 40px;
-    padding-left: 5%;
-}
-
-.hero-content h1 {
-    font-size: 3.5rem;
-    line-height: 1.2;
-}
-
-.hero-content p {
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-}
-
-.hero-background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1; 
-    background-image: url('/public/contenido/hero_mod.jpg');
-    background-size: cover; 
-    background-position: center right; 
-    background-repeat: no-repeat;
-}
 
 
 .featured-products,
