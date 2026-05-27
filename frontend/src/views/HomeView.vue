@@ -2,8 +2,8 @@
   <div class="home-container">
     <Hero />
 
-    <main class="featured-products mt-16">
-      <h2 class="page-title text-center mb-10">Productes Destacats</h2>
+    <main class="featured-products ">
+      <h2 class="page-title text-center mt-16 mb-10">Productes Destacats</h2>
       
       <section class="showcase">
         
@@ -36,7 +36,7 @@
 
       </section>
       <section class="container mx-auto my-16 px-4">
-  <h2 class="text-3xl font-bold text-center mb-10">Categories</h2>
+  <h2 class="page-title text-center !mt-10">Categories</h2>
   <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
     
     <RouterLink 

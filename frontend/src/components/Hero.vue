@@ -19,7 +19,7 @@
 
         <button
           @click="goToShop"
-          class="bg-[#243020] text-white !px-5 !py-3 !my-10 rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-110 text-xl font-semibold"
+          class="bg-[#243020] text-white !px-5 !py-3 !my-10 !rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-110 text-xl font-semibold"
         >
           Explora la Col·lecció
         </button>
