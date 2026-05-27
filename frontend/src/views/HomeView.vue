@@ -35,6 +35,28 @@
         </div>
 
       </section>
+      <section class="container mx-auto my-16 px-4">
+  <h2 class="text-3xl font-bold text-center mb-10">Categories</h2>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+    
+    <RouterLink 
+      v-for="cat in ['collars', 'anells', 'polseres', 'arracades', 'piercings']" 
+      :key="cat"
+      :to="{ path: '/products', query: { category: cat } }"
+      class="category-card group"
+    >
+      <div class="overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105">
+        <img 
+          :src="`../../public/contenido/productos/${cat}_mod.jpg`" 
+          :alt="cat" 
+          class="w-full h-40 object-cover"
+        >
+      </div>
+      <p class="mt-4 text-center font-semibold capitalize">{{ cat }}</p>
+    </RouterLink>
+
+  </div>
+</section>
     </main>
   </div>
 </template>
@@ -44,7 +66,16 @@ import { ref, onMounted } from 'vue'
 import api from '../services/http'
 import Hero from '../components/Hero.vue'
 
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 const featuredProducts = ref([])
+
+const goToCategory = (cat) => {
+  store.setCategory(cat); // Guardamos la categoría en memoria
+  router.push('/products'); // Navegamos a la vista SIN parámetros
+};
 
 const addToCart = (product) => {
   alert(`${product.name} s'ha afegit al carret!`)

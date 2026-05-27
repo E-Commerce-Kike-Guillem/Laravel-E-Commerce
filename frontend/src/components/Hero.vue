@@ -30,7 +30,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import heroImage from "@/assets/contenido/hero_mod.jpg";
+import heroImage from "../../public/contenido/hero_mod.jpg";
 
 const router = useRouter();
 
@@ -43,7 +43,7 @@ const goToShop = () => {
 .hero-full {
   width: 100vw; /* Fuerza el ancho de toda la ventana */
   height: 50vh; /* Ajusta la altura a tu gusto */
-  background-image: url("@/assets/contenido/hero_mod.jpg");
+  background-image: url("../../public/contenido/hero_mod.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
