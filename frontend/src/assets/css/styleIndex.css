@@ -1,3 +1,10 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita barras de desplazamiento horizontales */
+}
+
 :root {
     --color-primary: #3b7da3;
     --color-footer-bg: #2a402a; 
