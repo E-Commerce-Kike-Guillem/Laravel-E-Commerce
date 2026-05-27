@@ -15,7 +15,7 @@
       {{ errorMsg }}
     </div>
 
-    <form @submit.prevent="handleLogin">
+    <form @submit.prevent="handleLogin" novalidate>
       
       <div class="form-group">
         <label for="email">Email</label>
@@ -23,10 +23,11 @@
           type="email" 
           id="email" 
           v-model="form.email" 
-          required 
           autofocus 
           placeholder="Ex: usuari@email.com"
+          :class="{ 'input-error': errors.email }"
         >
+        <span v-if="errors.email" class="error-text">{{ errors.email }}</span>
       </div>
 
       <div class="form-group">
@@ -35,9 +36,10 @@
           type="password" 
           id="password" 
           v-model="form.password" 
-          required 
           placeholder="••••••••"
+          :class="{ 'input-error': errors.password }"
         >
+        <span v-if="errors.password" class="error-text">{{ errors.password }}</span>
       </div>
 
       <button type="submit" class="btn-auth" :disabled="loading">
@@ -62,23 +64,47 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/authStore';
+import * as yup from 'yup';
 
 const form = ref({ email: '', password: '' });
-const errorMsg = ref('');
+const errors = ref({}); 
+const errorMsg = ref(''); 
 const loading = ref(false);
 
 const authStore = useAuthStore();
 const router = useRouter();
 
+const schema = yup.object({
+  email: yup.string()
+    .trim()
+    .required('El correu electrònic és obligatori.')
+    .email('Introdueix un correu electrònic vàlid.'),
+  
+  password: yup.string()
+    .required('La contrasenya és obligatòria.')
+});
+
 const handleLogin = async () => {
   loading.value = true;
-  errorMsg.value = '';
+  errors.value = {}; 
+  errorMsg.value = ''; 
   
   try {
+    await schema.validate(form.value, { abortEarly: false });
+    
     await authStore.login(form.value);
     router.push('/products'); 
+    
   } catch (error) {
-    errorMsg.value = 'Credencials incorrectes o error de connexió.';
+    if (error.inner) {
+      const newErrors = {};
+      error.inner.forEach(err => {
+        newErrors[err.path] = err.message;
+      });
+      errors.value = newErrors;
+    } else {
+      errorMsg.value = 'Credencials incorrectes o error de connexió.';
+    }
   } finally {
     loading.value = false;
   }
@@ -86,16 +112,19 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-/* 1. Importem el teu CSS original */
 @import '../assets/css/stylesAuth.css';
 
 .auth-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 70px); /* Restem l'alçada de la navbar aprox */
+  
+  min-height: calc(100vh - 140px); 
   width: 100%;
-  background-color: #f9fafb; /* Color de fons suau, canvia'l si el teu era un altre */
+  background-color: #f9fafb; 
+  
+  padding: 2.5rem 1rem; 
+  box-sizing: border-box; 
 }
 
 .auth-logo {
@@ -103,17 +132,16 @@ const handleLogin = async () => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 1.5rem; /* Un poco de aire por debajo para que no se pegue al título */
+  margin-bottom: 1.5rem; 
 }
 
 .auth-logo img {
   display: block;
   margin: 0 auto;
-  max-height: 70px; /* Evitamos que el logo se haga gigante */
+  max-height: 70px; 
   width: auto;
 }
 
-/* 2. Afegim un estil extra per al missatge d'error de Vue (equivalent al x-input-error antic) */
 .error-alert {
   color: #721c24;
   background-color: #f8d7da;
@@ -123,5 +151,26 @@ const handleLogin = async () => {
   margin-bottom: 20px;
   text-align: center;
   font-size: 0.9rem;
+}
+
+.input-error {
+  border: 2px solid #dc3545 !important;
+  background-color: #fff8f8;
+  outline: none;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  border-color: #dc3545;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  text-align: left;
 }
 </style>
