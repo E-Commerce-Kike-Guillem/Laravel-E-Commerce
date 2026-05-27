@@ -1,47 +1,87 @@
 <template>
   <div class="home-container">
-    
     <Hero />
 
-    <main class="w-full mx-auto px-4 py-8">
-      <h2 class="text-3xl font-bold text-center mb-8">Productos Destacados</h2>
+    <main class="featured-products mt-16">
+      <h2 class="page-title text-center mb-10">Productes Destacats</h2>
       
-      <div v-if="loading" class="text-center">Cargando productos...</div>
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <ProductCard 
-          v-for="product in featuredProducts" 
-          :key="product.id" 
-          :product="product" 
-        />
-      </div>
+      <section class="showcase">
+  <div v-for="product in featuredProducts" :key="product.id" class="producte-minimal">
+    
+    <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
+    
+    <div class="prod-row-top">
+      <h3 class="prod-name">{{ product.name }}</h3>
+      <button class="btn-cart-icon" @click="addToCart(product)">
+        <i class="fas fa-shopping-basket"></i>
+      </button>
+    </div>
+    
+    <p class="prod-price">{{ product.price }} €</p>
+
+    <div class="mt-3">
+      <RouterLink :to="`/productes/${product.id}`" class="btn-details-clean">
+        Veure detalls
+      </RouterLink>
+    </div>
+    
+  </div>
+</section>
     </main>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '../services/http' // Tu cliente HTTP ya configurado
+import api from '../services/http'
 import Hero from '../components/Hero.vue'
-import ProductCard from '../components/ProductCard.vue'
 
 const featuredProducts = ref([])
-const loading = ref(true)
+
+const addToCart = (product) => {
+  alert(`${product.name} s'ha afegit al carret!`)
+}
 
 const fetchFeaturedProducts = async () => {
   try {
-    // Ajusta el endpoint según las rutas de tu API en Laravel
-    const response = await api.get('/products') 
-    // Asegúrate de acceder al formato correcto (por ejemplo response.data.data si está paginado)
-    featuredProducts.value = response.data.slice(0, 4) 
+    const response = await api.get('/products')
+    const allProducts = response.data.data || response.data
+    
+    // Lógica para 3 aleatorios
+    featuredProducts.value = allProducts
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
   } catch (error) {
-    console.error('Error al obtener productos destacados:', error)
-  } finally {
-    loading.value = false
+    console.error('Error:', error)
   }
 }
 
-onMounted(() => {
-  fetchFeaturedProducts()
-})
+onMounted(fetchFeaturedProducts)
 </script>
 
+<style scoped>
+@import '@/assets/css/stylesProductes.css';
+
+/* Assegurem l'estil del botó de detalls */
+.btn-details-clean {
+  text-decoration: none; 
+  color: #555; 
+  font-weight: 500;
+  transition: color 0.2s;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.btn-details-clean:hover {
+  color: #000; 
+  text-decoration: underline; 
+}
+
+/* Espaiat del grid */
+.showcase {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 20px;
+}
+</style>
