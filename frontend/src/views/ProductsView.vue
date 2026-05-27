@@ -25,20 +25,18 @@
             <h3 class="product-title">{{ product.name }}</h3>
             <p class="product-price">{{ product.price }} €</p>
             
-            <div class="product-actions">
-  
-              <RouterLink :to="`/productes/${product.id}`" class="btn btn-link btn-details-clean">
-                Veure detalls
+           <div class="product-actions">
+              <RouterLink :to="`/product/${product.id}`" class="btn-details-clean">
+                Veure més
               </RouterLink>
               
               <button 
-                class="btn btn-dark btn-cart-icon" 
+                class="btn-cart-icon" 
                 @click="addToCart(product)"
                 title="Afegir al carret" 
               >
                 <i class="fas fa-shopping-basket"></i>
               </button>
-
             </div>
           </div>
           
@@ -115,35 +113,41 @@ const addToCart = (product) => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  text-align: left; 
 }
 
 .product-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 .product-price {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #333;
   margin-bottom: 1rem;
+  text-align: left;
 }
 
 .product-actions {
   margin-top: auto;
   display: flex;
   justify-content: space-between; 
-  align-items: center;
+  align-items: center; 
   padding-top: 1rem;
+  border-top: 1px solid #f3f4f6; 
+  width: 100%;
 }
 
 .btn-details-clean {
   text-decoration: none; 
   color: #555; 
-  font-weight: 500;
+  font-weight: 600;
   padding-left: 0; 
   transition: color 0.2s;
+  font-size: 0.95rem;
 }
 
 .btn-details-clean:hover {
@@ -152,17 +156,26 @@ const addToCart = (product) => {
 }
 
 .btn-cart-icon {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 8px; 
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0; 
-  flex: 0 0 45px; 
+  flex: 0 0 40px;
+  background-color: #243020; 
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-cart-icon:hover {
+  transform: scale(1.05);
 }
 
 .btn-cart-icon i {
-  font-size: 1.2rem;
-  }
+  font-size: 1.1rem;
+}
 </style>

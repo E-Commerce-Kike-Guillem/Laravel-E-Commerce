@@ -90,14 +90,15 @@ const handleRegister = async () => {
 <style scoped>
 @import '../assets/css/stylesAuth.css';
 
-/* Mantenim el centre de la pantalla */
 .auth-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 140px); 
   width: 100%;
   background-color: #f9fafb;
+  padding: 2.5rem 1rem; 
+  box-sizing: border-box; 
 }
 
 .error-msg {
@@ -105,5 +106,20 @@ const handleRegister = async () => {
   font-size: 0.8rem;
   margin-top: 5px;
   display: block;
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.auth-logo img {
+  display: block;
+  margin: 0 auto;
+  max-height: 70px; 
+  width: auto;
 }
 </style>

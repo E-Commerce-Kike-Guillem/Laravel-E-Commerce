@@ -33,10 +33,61 @@
 
     <div class="comments-section" v-if="product">
       <h2>Comentaris</h2>
+      
       <div v-if="authStore.isAuthenticated" class="comment-form-container">
-        </div>
+        <h3>Deixa la teva opinió</h3>
+        <form @submit.prevent="submitComment">
+          <div class="form-row">
+            <label for="puntuacio">Valoració:</label>
+            <select id="puntuacio" v-model="commentForm.rating" class="select-rating">
+              <option value="5">★★★★★ (Excel·lent)</option>
+              <option value="4">★★★★ (Molt bo)</option>
+              <option value="3">★★★ (Correcte)</option>
+              <option value="2">★★ (Regular)</option>
+              <option value="1">★ (Dolent)</option>
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <label for="textComentari">Comentari:</label>
+            <textarea id="textComentari" v-model="commentForm.text" class="input-comment" placeholder="Escriu aquí..." required></textarea>
+          </div>
+          
+          <button type="submit" class="btn-submit-comment" :disabled="submittingComment">
+            {{ submittingComment ? 'Publicant...' : 'Publicar' }}
+          </button>
+        </form>
+      </div>
+      
       <div v-else class="login-notice">
         <p><RouterLink to="/login">Inicia sessió</RouterLink> per a deixar un comentari.</p>
+      </div>
+
+      <div id="llista-comentaris" class="mt-4">
+        <p v-if="loadingComments">Carregant comentaris...</p>
+        <p v-else-if="comments.length === 0" style="color:#777; font-style:italic;">Sigues el primer a comentar!</p>
+        
+        <div v-else class="comment" v-for="c in comments" :key="c.id">
+          <div class="comment-header" style="display:flex; justify-content:space-between;">
+            <span>
+              {{ c.user_name || 'Usuari' }} 
+              <span style="color:#f39c12;">{{ '★'.repeat(c.rating || 5) + '☆'.repeat(5 - (c.rating || 5)) }}</span>
+            </span>
+            <div>
+              <span class="comment-date">{{ formatDate(c.created_at) }}</span>
+              
+              <template v-if="canEditOrDelete(c.user_id)">
+                <button @click="editComment(c)" style="color:blue; border:none; background:none; cursor:pointer; margin-left:10px;" title="Editar">
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button @click="deleteComment(c.id)" style="color:red; border:none; background:none; cursor:pointer; margin-left:5px;" title="Esborrar">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </template>
+            </div>
+          </div>
+          <div class="comment-body">{{ c.text }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -48,20 +99,37 @@ import { useRoute } from 'vue-router';
 import { useAuthStore } from '../stores/authStore';
 import http from '../services/http';
 
+// 1. IMPORTAMOS NUESTRA LÓGICA DE COMENTARIOS
+import { useComments } from '../composables/useComments'; 
+
 const route = useRoute();
 const authStore = useAuthStore();
 const product = ref(null);
 const loading = ref(true);
-const isLiked = ref(false);
-const likeCount = ref(0);
 
+// Datos exclusivos del formulario visual
+const commentForm = ref({ text: '', rating: 5 });
+
+// 2. EXTRAEMOS LAS FUNCIONES DEL ARCHIVO JS
+const { 
+  comments, 
+  loadingComments, 
+  submittingComment, 
+  loadComments, 
+  submitComment, 
+  deleteComment, 
+  editComment, 
+  canEditOrDelete, 
+  formatDate 
+} = useComments(route.params.id);
+
+// Al cargar la página, pedimos el producto y los comentarios
 onMounted(async () => {
-  const { id } = route.params;
   try {
-    const response = await http.get(`/products/${id}`);
+    const response = await http.get(`/products/${route.params.id}`);
     product.value = response.data.data || response.data;
-    // Aquí podries fer una segona crida per carregar likes i comentaris:
-    // const likes = await http.get(`/products/${id}/likes`);
+    
+    await loadComments(); // Llamada a nuestra lógica externa
   } catch (err) {
     console.error("Error:", err);
   } finally {
@@ -69,8 +137,15 @@ onMounted(async () => {
   }
 });
 
-const toggleLike = () => { isLiked.value = !isLiked.value; likeCount.value += isLiked.value ? 1 : -1; };
-const addToCart = () => { alert('Producte afegit!'); };
+// Función puente para enviar desde el formulario visual al archivo JS
+const handleCommentSubmit = async () => {
+  const success = await submitComment(commentForm.value.text, commentForm.value.rating);
+  if (success) {
+    // Si se envió bien, limpiamos la caja de texto
+    commentForm.value.text = '';
+    commentForm.value.rating = 5;
+  }
+};
 </script>
 
 <style scoped>
