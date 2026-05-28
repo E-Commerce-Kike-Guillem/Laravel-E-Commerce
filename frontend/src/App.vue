@@ -17,6 +17,15 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue' // <-- Importem el nou component
+import { onMounted } from 'vue';
+import { useAuthStore } from './stores/authStore';
+
+const authStore = useAuthStore();
+
+onMounted(async () => {
+  // Cuando la app carga, preguntamos al backend si hay una sesión activa
+  await authStore.fetchUser(); 
+});
 </script>
 
 <style>

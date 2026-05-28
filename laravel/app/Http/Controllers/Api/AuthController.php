@@ -7,6 +7,8 @@ use Illuminate\Validation\Rules\Password;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -57,4 +59,24 @@ class AuthController extends Controller
         // 4. Devolvemos el usuario creado
         return response()->json($user, 201);
     }
+
+    public function handleGoogleCallback()
+{
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+    $user = User::updateOrCreate([
+        'email' => $googleUser->getEmail(),
+    ], [
+        'name' => $googleUser->getName(),
+        'google_id' => $googleUser->getId(),
+        'password' => bcrypt(Str::random(16)), // Contraseña aleatoria
+    ]);
+
+    Auth::login($user);
+
+    request()->session()->regenerate();
+
+    // Redirige al frontend (Vue)
+    return redirect('http://localhost:5174');
+}
 }

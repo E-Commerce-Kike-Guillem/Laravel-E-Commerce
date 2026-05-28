@@ -15,7 +15,7 @@
         <RouterLink class="nav-link" to="/contacte">Contacte</RouterLink>
 
         <template v-if="authStore.isAuthenticated">
-          <RouterLink class="nav-link" to="/profile">Mi Perfil</RouterLink>
+          <RouterLink class="nav-link" to="/perfil">{{ authStore.user?.name }}</RouterLink>
 
           <button @click="handleLogout" class="nav-link logout-btn">
             Cerrar Sesión

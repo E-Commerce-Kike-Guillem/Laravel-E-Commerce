@@ -6,7 +6,8 @@ use App\Http\Controllers\ProductImportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\ProfileController;
+use Laravel\Socialite\Facades\Socialite;
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -44,3 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/comments/{comment}', [CommentController::class, 'update']);
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 });
+Route::middleware(['auth:sanctum'])->patch('/profile', [ProfileController::class, 'update']);
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
