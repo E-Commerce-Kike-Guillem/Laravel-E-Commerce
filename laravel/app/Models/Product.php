@@ -19,4 +19,9 @@ class Product extends Model
         'image',
         'category'
     ];
+
+    public function comments()
+{
+    return $this->hasMany(Comment::class)->latest(); // latest() los ordena por los más recientes primero
+}
 }
