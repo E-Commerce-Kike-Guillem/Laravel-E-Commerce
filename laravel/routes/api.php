@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Laravel\Socialite\Facades\Socialite;
-
+use App\Http\Controllers\CartController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -51,3 +51,8 @@ Route::get('/auth/google', function () {
 });
 
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/cart', [CartController::class, 'index']);
+    Route::post('/cart', [CartController::class, 'store']);
+    Route::delete('/cart/{productId}', [CartController::class, 'destroy']);
+});
