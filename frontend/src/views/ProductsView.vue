@@ -1,22 +1,24 @@
 <template>
   <main class="page-content-wrapper">
-    <div class="flex justify-center mb-8">
-      <select 
-        :value="route.query.category || ''"
-        @change="handleCategoryChange" 
-        class="px-6 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#243020] cursor-pointer"
-      >
-        <option value="">Tots els productes</option>
-        <option value="collars">Collars</option>
-        <option value="anells">Anells</option>
-        <option value="polseres">Polseres</option>
-        <option value="arracades">Arracades</option>
-        <option value="piercings">Piercings</option>
-      </select>
-    </div>
-
     <div class="catalog-container container my-5">
-      <h1 class="page-title text-left mb-5">Tots els productes:</h1>
+      
+      <div class="catalog-header-wrapper">
+        <h1 class="page-title text-left">
+          {{ route.query.category ? 'Productes: ' + route.query.category.charAt(0).toUpperCase() + route.query.category.slice(1) : 'Tots els productes' }}
+        </h1>
+        
+        <select 
+          :value="route.query.category || ''"
+          @change="handleCategoryChange" 
+        >
+          <option value="">Tots els productes</option>
+          <option value="collars">Collars</option>
+          <option value="anells">Anells</option>
+          <option value="polseres">Polseres</option>
+          <option value="arracades">Arracades</option>
+          <option value="piercings">Piercings</option>
+        </select>
+      </div>
 
       <div v-if="loading" class="text-center">
         <div class="spinner-border text-primary d-block mx-auto" role="status">
@@ -50,6 +52,7 @@
           </div>
         </div>
       </section>
+      
     </div>
   </main>
 </template>
@@ -106,103 +109,5 @@ const addToCart = (product) => {
 <style scoped>
 @import "@/assets/css/stylesProductes.css";
 
-.page-content-wrapper { width: 100%; }
 
-.showcase {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-.product-card {
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.product-image img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.product-info {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-}
-
-.product-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.product-price {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.product-actions {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 1rem;
-  border-top: 1px solid #f3f4f6;
-  width: 100%;
-}
-
-.btn-details-clean {
-  text-decoration: none;
-  color: #555;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: color 0.2s;
-}
-
-.btn-details-clean:hover { color: #000; text-decoration: underline; }
-
-.btn-cart-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #243020;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.btn-cart-icon:hover { transform: scale(1.05); }
-.btn-cart-icon i { font-size: 1.1rem; }
-
-select {
-  margin-top: 80px;
-  margin-bottom:-90px;
-  background-color: white;
-  color: #333;
-  font-family: var(--font-ui);
-  width: 250px; /* Ancho fijo para que no sea diminuto */
-}
-
-select:focus {
-  border-color: #243020;
-}
 </style>

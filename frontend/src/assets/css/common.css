@@ -6,7 +6,7 @@
     --font-ui: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --color-text: #333;
     --color-bg: #fcfcfc;
-    --header-height: 120px;
+    --header-height: 100px; /* Definimos la altura exacta de tu navbar */
 }
 
 body {
@@ -15,7 +15,6 @@ body {
     color: var(--color-text);
     margin: 0;
     padding: 0;
-    padding-top: 120px; 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -24,7 +23,15 @@ body {
 main {
     flex: 1;
     width: 100%;
+    /* ESTA ES LA LÍNEA MÁGICA QUE EVITA EL SOLAPAMIENTO */
+    margin-top: var(--header-height); 
 }
+
+/* Base general */
+a { text-decoration: none; color: inherit; transition: color 0.2s; }
+ul { list-style: none; margin: 0; padding: 0; }
+img { max-width: 100%; display: block; }
+
 
 /* --- ESTILO UNIFICADO PARA ENLACES Y BOTONES DE NAVEGACIÓN --- */
 .nav-link {
@@ -47,10 +54,6 @@ main {
     color: #000;
 }
 
-/* Base general */
-a { text-decoration: none; color: inherit; transition: color 0.2s; }
-ul { list-style: none; margin: 0; padding: 0; }
-img { max-width: 100%; display: block; }
 
 /* --- 2. HEADER FIX I UNIFICAT --- */
 .header-exacto {
@@ -60,6 +63,16 @@ img { max-width: 100%; display: block; }
     align-items: center;
     justify-content: space-between;
     background-color: white; 
+    position: fixed; /* Header fijo al hacer scroll */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sombra suave para separar del contenido */
+    padding: 0 20px; /* Padding lateral por defecto */
+}
+
+.header-logo-container {
+    margin-left: 10px; 
 }
 
 .header-logo-container img {
@@ -70,10 +83,21 @@ img { max-width: 100%; display: block; }
 .header-right-side {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 
-/* Menú Centrat */
+/* Botón Hamburguesa (Oculto en Escritorio) */
+.menu-toggle-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Menú Centrat (Escritorio) */
 .nav-links-clean {
     position: absolute;
     left: 50%;
@@ -83,12 +107,27 @@ img { max-width: 100%; display: block; }
     gap: 30px;
 }
 
+.nav-links-clean .nav-link {
+    font-size: 1.2rem;
+    font-weight: 500; 
+    padding: 10px 15px; 
+    color: #333; 
+}
+
+.nav-links-clean .nav-link:hover {
+    color: #000;
+    transform: scale(1.05); 
+    transition: 0.2s;
+}
+
+
 /* --- 3. FOOTER UNIFICAT --- */
 .main-footer {
+    width: 100%;
     background-color: #243020;
     color: white;
     padding: 60px 0;
-    margin-top: 80px;
+    margin-top: 0; 
     font-family: var(--font-ui);
 }
 
@@ -104,6 +143,15 @@ img { max-width: 100%; display: block; }
     gap: 40px;
 }
 
+.logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+}
+
 .footer-logo img { max-width: 190px; margin-bottom: 20px; }
 .footer-column { display: flex; flex-direction: column; }
 .footer-column h4 { font-size: 1.1rem; margin-bottom: 20px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
@@ -112,13 +160,78 @@ img { max-width: 100%; display: block; }
 .social-icons { display: flex; gap: 15px; }
 .social-icons a { font-size: 1.5rem; color: white; }
 
+
 /* --- 4. RESPONSIVE COMÚ --- */
+
+/* Pantallas Medianas (Tablets pequeñas y móviles en horizontal) */
 @media (max-width: 950px) {
-    body { padding-top: 0; }
-    .header-exacto { position: relative; height: auto; flex-direction: column; padding: 20px; gap: 15px; }
-    .nav-links-clean { position: static; transform: none; flex-direction: column; text-align: center; gap: 15px; }
-    .header-right-side { width: 100%; justify-content: center; }
-    .footer-grid { grid-template-columns: 1fr; text-align: center; }
-    .footer-logo { align-items: center; display: flex; justify-content: center; }
-    .social-icons { justify-content: center; }
+    
+    /* Configuración del Header para Móvil */
+    .menu-toggle-btn {
+        display: block; /* Mostramos la hamburguesa */
+    }
+
+    .header-right-side {
+        gap: 15px; /* Menos espacio entre iconos en móvil */
+    }
+
+    /* Comportamiento del Menú Desplegable */
+    .nav-links-clean {
+        position: absolute;
+        top: 100px; /* Justo debajo del header */
+        left: 0;
+        width: 100%;
+        background-color: white;
+        transform: none; /* Desactivamos el centrado de escritorio */
+        flex-direction: column;
+        gap: 0;
+        
+        /* Animación de apertura */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+    }
+
+    /* Esta clase la pone Vue cuando hacemos clic en la hamburguesa */
+    .nav-links-clean.is-open {
+        max-height: 400px; /* Altura suficiente para que quepan todos los enlaces */
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .nav-links-clean .nav-link {
+        width: 100%;
+        padding: 15px 20px;
+        text-align: center;
+        border-bottom: 1px solid #f9f9f9;
+        font-size: 1.1rem;
+    }
+
+    .nav-links-clean .nav-link:hover {
+        transform: none; /* Quitamos el scale en móvil para que no haga cosas raras */
+        background-color: #fcfcfc;
+    }
+
+    /* Configuración del Footer para Tablet */
+    .footer-grid { 
+        grid-template-columns: 1fr 1fr; /* Pasa de 4 a 2 columnas */
+    }
+}
+
+/* Pantallas Pequeñas (Móviles en vertical) */
+@media (max-width: 600px) {
+    
+    /* Configuración del Footer para Móvil */
+    .footer-grid { 
+        grid-template-columns: 1fr; /* Todo en 1 columna */
+        text-align: center; 
+    }
+    .footer-logo { 
+        align-items: center; 
+        display: flex; 
+        justify-content: center; 
+    }
+    .social-icons { 
+        justify-content: center; 
+    }
 }

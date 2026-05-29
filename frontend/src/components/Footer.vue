@@ -36,8 +36,5 @@
 <style scoped>
 @import '../assets/css/common.css';
 
-.main-footer {
-  width: 100%;
-  margin-top: 0;
-}
+
 </style>

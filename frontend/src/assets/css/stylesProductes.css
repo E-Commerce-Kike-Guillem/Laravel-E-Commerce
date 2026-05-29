@@ -7,87 +7,9 @@
     --color-text: #333;
     --color-light-gray: #f9f9f9;
     --color-white: #ffffff;
-    --font-main: 'Georgia', serif; /* Fuente elegante para títulos */
-    --font-ui: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente limpia para menús */
+    --font-main: 'Georgia', serif; 
+    --font-ui: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
 }
-
-/* --- CONTENIDO DEL CATÁLOGO --- */
-.catalog-container {
-    max-width: 1200px;
-    margin: 0 auto; /* Ya tenemos padding en el body, no hace falta margen superior grande */
-    padding: 0 20px;
-    margin-top: 40px;
-}
-
-.page-title {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 40px; /* Separación con los productos */
-}
-
-/* --- GRID DE PRODUCTOS --- */
-.showcase {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 80px;
-}
-
-/* --- TARJETA DE PRODUCTO --- */
-.producte-minimal {
-    display: flex;
-    flex-direction: column;
-}
-
-.producte-minimal img {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-    margin-bottom: 12px;
-    background-color: #f0f0f0;
-}
-
-.prod-row-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-.prod-name {
-    font-family: 'Times New Roman', serif;
-    font-size: 16px;
-    color: #111;
-    text-decoration: none;
-}
-
-.prod-price {
-    font-family: 'Times New Roman', serif;
-    font-size: 15px;
-    color: #555;
-    margin-top: 2px;
-}
-
-.btn-cart-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: #333;
-}
-
-/* --- FOOTER --- */
-.main-footer {
-    background-color: #243020;
-    color: white;
-    padding: 60px 0;
-    margin-top: 80px;
-    text-align: center;
-}
-
-/* --- RESPONSIVE --- */
-
 
 * {
     box-sizing: border-box;
@@ -95,7 +17,6 @@
     padding: 0;
     line-height: 1.5;
 }
-
 
 a {
     text-decoration: none;
@@ -126,12 +47,36 @@ h2 {
     font-weight: normal;
 }
 
-/* --- HEADER FIJO Y CENTRADO --- */
+/* --- CONTENIDO DEL CATÁLOGO --- */
+.catalog-container {
+    max-width: 1200px;
+    margin: 0 auto; 
+    padding: 0 20px;
+    margin-top: 40px;
+}
 
+.catalog-header-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Magia: Si no caben, el select baja a la siguiente línea */
+    justify-content: space-between; /* Título a la izquierda, select a la derecha */
+    align-items: center; /* Los centra verticalmente */
+    margin-bottom: 40px; /* El margen que antes tenía el título lo ponemos aquí */
+    gap: 20px; /* Separación de seguridad cuando se apilan en móvil */
+}
+
+.page-title {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 0; /* Quitamos el margen inferior porque ahora lo da el wrapper */
+    flex: 1 1 auto; /* Deja que el título respire y ocupe el espacio necesario */
+}
+.page-content-wrapper { width: 100%; }
 
 /* --- RESPONSIVE HEADER --- */
 @media (max-width: 950px) {
-    body { padding-top: 0; } /* En móvil el menú no suele ser fijo */
+    body { padding-top: 0; } 
     
     .header-exacto { position: relative; height: auto; flex-direction: column; padding: 20px; gap: 15px; }
     .nav-links-clean { position: static; transform: none; flex-direction: column; text-align: center; gap: 10px; }
@@ -216,23 +161,31 @@ h2 {
     background-color: #2a5c7a;
 }
 
-/* --- PRODUCTOS DESTACADOS (Grid) --- */
+/* --- GRID DE PRODUCTOS --- */
 .featured-products {
     max-width: 1200px;
     margin: 60px auto;
     padding: 0 20px;
 }
 
+/* Se mantiene la declaración de más abajo */
 .showcase {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
 }
 
 @media (max-width: 768px) {
     .showcase { grid-template-columns: 1fr; }
 }
 
+/* --- TARJETA DE PRODUCTO MINIMAL (Clases que tenías arriba) --- */
+.producte-minimal {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Se mantiene la declaración de más abajo */
 .producte-minimal img {
     width: 100%;
     height: 300px;
@@ -248,6 +201,7 @@ h2 {
     margin-bottom: 5px;
 }
 
+/* Se mantiene la declaración de más abajo */
 .prod-name {
     color: #222;
     text-decoration: none;
@@ -255,16 +209,113 @@ h2 {
     font-size: 1.1rem;
 }
 
+/* Se mantiene la declaración de más abajo */
 .prod-price {
     font-family: var(--font-ui);
     color: #555;
     font-size: 1rem;
 }
 
+/* --- TARJETA DE PRODUCTO NUEVA --- */
+.product-card {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.product-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+  width: 100%;
+}
+
+.btn-details-clean {
+  text-decoration: none;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.btn-details-clean:hover { color: #000; text-decoration: underline; }
+
+/* Se mantiene la declaración de más abajo */
 .btn-cart-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #222;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #243020;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-cart-icon:hover { transform: scale(1.05); }
+.btn-cart-icon i { font-size: 1.1rem; }
+
+/* --- SELECT Y MISC --- */
+select {
+    /* Eliminamos los márgenes negativos que lo rompían */
+    margin: 0; 
+    padding: 8px 12px; /* Un poco de aire interior para que se lea mejor */
+    background-color: white;
+    color: #333;
+    font-family: var(--font-ui);
+    
+    /* Control de tamaño */
+    width: 100%;
+    max-width: 250px; /* Nunca será más grande que esto */
+    flex: 0 1 250px; /* Le dice a Flexbox que intente medir 250px pero pueda encogerse si hace falta */
+    
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+select:focus {
+    border-color: #243020;
+    outline: none; /* Quita el borde azul por defecto de los navegadores */
 }
