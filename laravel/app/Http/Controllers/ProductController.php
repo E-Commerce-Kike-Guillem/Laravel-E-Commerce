@@ -29,9 +29,9 @@ class ProductController extends Controller
         }
 
         // 3. Filtre per categoria (Opcional: només si vas afegir la columna 'category')
-        // if ($request->has('category')) {
-        //     $query->where('category', $request->category);
-        // }
+        if ($request->has('category')) {
+            $query->where('category', $request->category);
+        }
 
         // 4. Paginació (10 productes per pàgina)
         $products = $query->paginate(10);

@@ -6,7 +6,6 @@ const http = axios.create({
   withXSRFToken: true,   // <-- ¡LA PIEZA QUE FALTABA! Extrae el token CSRF automáticamente
   headers: {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
   }
 });
 

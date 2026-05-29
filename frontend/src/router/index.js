@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import AboutView from '../views/AboutView.vue';
 import ContactView from '../views/ContactView.vue';
+import AdminImportView from '../views/AdminImportView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,12 @@ const router = createRouter({
       name: 'contact',
       component: ContactView
     },
+    {
+    path: '/admin/importar',
+    name: 'AdminImport',
+    component: AdminImportView,
+    meta: { requiresAdmin: true }
+    }
   ]
 })
 

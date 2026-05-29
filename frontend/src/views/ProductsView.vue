@@ -1,5 +1,20 @@
 <template>
   <main class="page-content-wrapper">
+    <div class="flex justify-center mb-8">
+      <select 
+        :value="route.query.category || ''"
+        @change="handleCategoryChange" 
+        class="px-6 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#243020] cursor-pointer"
+      >
+        <option value="">Tots els productes</option>
+        <option value="collars">Collars</option>
+        <option value="anells">Anells</option>
+        <option value="polseres">Polseres</option>
+        <option value="arracades">Arracades</option>
+        <option value="piercings">Piercings</option>
+      </select>
+    </div>
+
     <div class="catalog-container container my-5">
       <h1 class="page-title text-left mb-5">Tots els productes:</h1>
 
@@ -10,63 +25,77 @@
       </div>
 
       <div v-else-if="error" class="alert alert-danger text-center" role="alert">
-         {{ error }}
+        {{ error }}
       </div>
 
       <section v-else class="showcase" id="lista-productos">
-        
         <div class="product-card" v-for="product in products" :key="product.id">
-          
           <div class="product-image">
-            <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
+            <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name" />
           </div>
-          
+
           <div class="product-info">
             <h3 class="product-title">{{ product.name }}</h3>
             <p class="product-price">{{ product.price }} €</p>
-            
-           <div class="product-actions">
+
+            <div class="product-actions">
               <RouterLink :to="`/product/${product.id}`" class="btn-details-clean">
                 Veure més
               </RouterLink>
-              
-              <button 
-                class="btn-cart-icon" 
-                @click="addToCart(product)"
-                title="Afegir al carret" 
-              >
+
+              <button class="btn-cart-icon" @click="addToCart(product)" title="Afegir al carret">
                 <i class="fas fa-shopping-basket"></i>
               </button>
             </div>
           </div>
-          
         </div>
-
       </section>
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import http from '../services/http'; 
+import { ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import http from '../services/http';
 
+const route = useRoute();
+const router = useRouter();
 const products = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
-onMounted(async () => {
+const fetchProducts = async (category) => {
+  loading.value = true;
+  error.value = null;
   try {
-    const response = await http.get('/products');
-    
+    const params = category ? { category } : {};
+    const response = await http.get('/products', { params });
     products.value = response.data.data || response.data;
   } catch (e) {
     error.value = "No s'ha pogut connectar amb l'API de Laravel.";
-    console.error(e);
+    console.error("Error al cargar:", e);
   } finally {
     loading.value = false;
   }
-});
+};
+
+watch(
+  () => route.query.category,
+  (newCat) => {
+    fetchProducts(newCat);
+  },
+  { immediate: true }
+);
+
+const handleCategoryChange = (event) => {
+  const category = event.target.value;
+  if (category === "") {
+    router.push({ path: '/products' });
+  } else {
+    router.push({ path: '/products', query: { category } });
+  }
+};
 
 const addToCart = (product) => {
   console.log('Afegint al carret:', product.name);
@@ -75,11 +104,9 @@ const addToCart = (product) => {
 </script>
 
 <style scoped>
-@import '@/assets/css/stylesProductes.css';
+@import "@/assets/css/stylesProductes.css";
 
-.page-content-wrapper {
-  width: 100%;
-}
+.page-content-wrapper { width: 100%; }
 
 .showcase {
   display: grid;
@@ -99,7 +126,7 @@ const addToCart = (product) => {
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .product-image img {
@@ -113,14 +140,13 @@ const addToCart = (product) => {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  text-align: left; 
+  text-align: left;
 }
 
 .product-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  text-align: left;
 }
 
 .product-price {
@@ -128,54 +154,55 @@ const addToCart = (product) => {
   font-weight: 700;
   color: #333;
   margin-bottom: 1rem;
-  text-align: left;
 }
 
 .product-actions {
   margin-top: auto;
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   padding-top: 1rem;
-  border-top: 1px solid #f3f4f6; 
+  border-top: 1px solid #f3f4f6;
   width: 100%;
 }
 
 .btn-details-clean {
-  text-decoration: none; 
-  color: #555; 
+  text-decoration: none;
+  color: #555;
   font-weight: 600;
-  padding-left: 0; 
-  transition: color 0.2s;
   font-size: 0.95rem;
+  transition: color 0.2s;
 }
 
-.btn-details-clean:hover {
-  color: #000; 
-  text-decoration: underline; 
-}
+.btn-details-clean:hover { color: #000; text-decoration: underline; }
 
 .btn-cart-icon {
   width: 40px;
   height: 40px;
-  border-radius: 8px; 
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0; 
-  flex: 0 0 40px;
-  background-color: #243020; 
+  background-color: #243020;
   color: white;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
 
-.btn-cart-icon:hover {
-  transform: scale(1.05);
+.btn-cart-icon:hover { transform: scale(1.05); }
+.btn-cart-icon i { font-size: 1.1rem; }
+
+select {
+  margin-top: 80px;
+  margin-bottom:-90px;
+  background-color: white;
+  color: #333;
+  font-family: var(--font-ui);
+  width: 250px; /* Ancho fijo para que no sea diminuto */
 }
 
-.btn-cart-icon i {
-  font-size: 1.1rem;
+select:focus {
+  border-color: #243020;
 }
 </style>

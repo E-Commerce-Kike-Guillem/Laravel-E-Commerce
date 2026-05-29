@@ -12,7 +12,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 mb-4 mb-lg-0">
-            <img src="../../public/contenido/anell.jpg" alt="Joieria Artesanal" class="about-img">
+            <img src="../../public/contenido/productos/anell.jpg" alt="Joieria Artesanal" class="about-img">
           </div>
           <div class="col-lg-6">
             <div class="about-content">
