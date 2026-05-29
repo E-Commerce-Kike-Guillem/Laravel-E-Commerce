@@ -32,7 +32,7 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
 // RUTA DE IMPORTACIÓ (Única y protegida)
-Route::middleware(['auth:sanctum', 'admin'])->post('/products/import', [ProductImportController::class, 'import']);
+Route::middleware(['auth:sanctum', 'admin'])->post('/products/import', [ProductImportController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

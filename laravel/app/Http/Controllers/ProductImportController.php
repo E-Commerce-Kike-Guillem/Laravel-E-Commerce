@@ -23,24 +23,27 @@ class ProductImportController extends Controller
 
     // 2. Processar l'Excel
     public function store(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv',
+    ]);
 
-        try {
-            $import = new ProductsImport(); // Creem la instància abans
-            Excel::import($import, $request->file('file'));
-            
-            // Registrem al Log de Laravel (storage/logs/laravel.log)
-            Log::info("Importació d'Excel: s'han importat/actualitzat {$import->rows} productes.");
-            
-            // Retornem el feedback a la vista amb el número exacte
-            return back()->with('success', "S'han importat o actualitzat {$import->rows} productes correctament!");
+    try {
+        $import = new ProductsImport();
+        Excel::import($import, $request->file('file'));
+        
+        Log::info("Importación exitosa.");
+        
+        // DEVOLVER JSON, NO back()
+        return response()->json([
+            'message' => "S'han importat correctament!", 
+            'rows' => $import->rows
+        ], 200);
 
-        } catch (\Exception $e) {
-            Log::error("Error a la importació d'Excel: " . $e->getMessage());
-            return back()->with('error', 'Error important: ' . $e->getMessage());
-        }
+    } catch (\Exception $e) {
+        Log::error("Error: " . $e->getMessage());
+        // DEVOLVER JSON, NO back()
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
 }
