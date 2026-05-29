@@ -4,11 +4,9 @@ import http from "../services/http";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
+    isAuthenticated: (state) => !!state.user
   }),
 
-  getters: {
-    isAuthenticated: (state) => !!state.user,
-  },
 
   actions: {
     async login(credentials) {
