@@ -45,7 +45,7 @@
         <button type="submit" class="btn-auth" :disabled="loading">
           {{ loading ? "Carregant..." : "Entrar" }}
         </button>
-        <a href="http://localhost/api/auth/google" class="btn-google">
+        <a href="http://localhost:8080/api/auth/google" class="btn-google">
   <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo" />
   <span>Iniciar sesión con Google</span>
 </a>

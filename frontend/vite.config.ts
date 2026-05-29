@@ -14,7 +14,11 @@ export default defineConfig({
       '/api': {
         target: 'http://host.docker.internal:8080', // El puerto de tu Laravel
         changeOrigin: true,
-      }
+      },
+      '/sanctum': { // <-- AÑADE ESTO
+    target: 'http://host.docker.internal:8080',
+    changeOrigin: true,
+  }
     }
   },
   plugins: [
