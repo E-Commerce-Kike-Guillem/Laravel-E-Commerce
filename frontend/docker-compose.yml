@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5174:5174" # El puerto que usa tu Vite
+    volumes:
+      - .:/app
+      - /app/node_modules # Bind mount para mantener los módulos fuera del host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Ayuda a que el hot-reload detecte cambios en Docker
