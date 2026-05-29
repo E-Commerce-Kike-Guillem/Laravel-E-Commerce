@@ -1,23 +1,4 @@
-/* Responsive Header */
-@media (max-width: 950px) {
-    body { padding-top: 0; } /* En mòbil treiem el padding fix */
-    
-    .header-exacto { 
-        position: relative; /* Deixa de ser fix en pantalles petites */
-        height: auto;
-        flex-direction: column; 
-        padding: 20px; 
-        gap: 20px;
-    }
-    .nav-links-clean {
-        position: static; /* Tornem al flux normal */
-        transform: none;
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-    .header-right-side { width: 100%; justify-content: center; }
-}
+
 
 
 /* --- CONTENEDOR DETALL --- */

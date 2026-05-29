@@ -8,29 +8,16 @@
     </div>
 
     <nav class="nav-links-clean" :class="{ 'is-open': isMenuOpen }">
-      <RouterLink class="nav-link" to="/products" @click="isMenuOpen = false">
-        Productes
-      </RouterLink>
-      
-      <RouterLink class="nav-link" to="/sobre-nosaltres" @click="isMenuOpen = false">
-        Sobre nosaltres
-      </RouterLink>
-      
-      <RouterLink class="nav-link" to="/contacte" @click="isMenuOpen = false">
-        Contacte
-      </RouterLink>
+      <RouterLink class="nav-link" to="/products" @click="isMenuOpen = false">Productes</RouterLink>
+      <RouterLink class="nav-link" to="/sobre-nosaltres" @click="isMenuOpen = false">Sobre nosaltres</RouterLink>
+      <RouterLink class="nav-link" to="/contacte" @click="isMenuOpen = false">Contacte</RouterLink>
 
       <template v-if="authStore.isAuthenticated">
         <RouterLink class="nav-link" to="/perfil" @click="isMenuOpen = false">
           {{ authStore.user?.name }}
         </RouterLink>
 
-        <RouterLink 
-          v-if="authStore.user?.role === 'admin'" 
-          to="/admin/importar" 
-          class="nav-link" 
-          @click="isMenuOpen = false"
-        >
+        <RouterLink v-if="authStore.user?.role === 'admin'" to="/admin/importar" class="nav-link" @click="isMenuOpen = false">
           Importar Productes
         </RouterLink>
 
@@ -48,7 +35,7 @@
 
     <div class="header-right-side">
       <button class="menu-toggle-btn" @click="isMenuOpen = !isMenuOpen">
-        <i class="fas fa-bars"></i> 
+        <i class="fas fa-bars"></i>
       </button>
     </div>
     
@@ -62,8 +49,6 @@ import { useAuthStore } from "../stores/authStore";
 
 const authStore = useAuthStore();
 const router = useRouter();
-
-// Variable para controlar si el menú hamburguesa está abierto
 const isMenuOpen = ref(false);
 
 const handleLogout = async () => {
@@ -71,7 +56,6 @@ const handleLogout = async () => {
   router.push("/login");
 };
 
-// Pequeña función extra para cerrar el menú antes de hacer logout
 const handleMenuLogout = async () => {
   isMenuOpen.value = false;
   await handleLogout();
