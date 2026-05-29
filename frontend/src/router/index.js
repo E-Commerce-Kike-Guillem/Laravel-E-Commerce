@@ -7,6 +7,7 @@ import AboutView from '../views/AboutView.vue';
 import ContactView from '../views/ContactView.vue';
 import AdminImportView from '../views/AdminImportView.vue';
 import ProfileView from '../views/ProfileView.vue';
+import CartView from '../views/CartView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/perfil',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView
     }
   ]
 })

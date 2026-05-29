@@ -5,7 +5,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
   }),
-  
+
   getters: {
     // Si necesitas lógica, usa un getter
     isLoggedIn: (state) => !!state.user,
@@ -15,16 +15,22 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     async login(credentials) {
       // 1. Llamada al proxy configurado en vite.config.ts
-      await http.get("/sanctum/csrf-cookie"); 
-      
+      await http.get("/sanctum/csrf-cookie");
+
       const response = await http.post("/login", credentials);
       this.user = response.data;
       this.isAuthenticated = true;
+
+      const cartStore = useCartStore();
+      await cartStore.fetchCart();
     },
 
     async logout() {
       await http.post("/logout");
       this.user = null;
+
+      const cartStore = useCartStore();
+      cartStore.clearCart();
     },
 
     async fetchUser() {

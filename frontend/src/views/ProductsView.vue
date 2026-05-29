@@ -45,7 +45,7 @@
                 Veure més
               </RouterLink>
 
-              <button class="btn-cart-icon" @click="addToCart(product)" title="Afegir al carret">
+              <button class="btn-cart-icon" @click="cartStore.addToCart(product)" title="Afegir al carret">
                 <i class="fas fa-shopping-basket"></i>
               </button>
             </div>
@@ -61,7 +61,10 @@
 import { ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import http from '../services/http';
+import { useCartStore } from '../stores/cartStore';
 
+const cartStore = useCartStore();
+const props = defineProps(['product']);
 const route = useRoute();
 const router = useRouter();
 const products = ref([]);
@@ -100,10 +103,6 @@ const handleCategoryChange = (event) => {
   }
 };
 
-const addToCart = (product) => {
-  console.log('Afegint al carret:', product.name);
-  alert(`${product.name} s'ha afegit al carret!`);
-};
 </script>
 
 <style scoped>

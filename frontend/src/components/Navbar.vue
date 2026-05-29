@@ -44,6 +44,13 @@
           Iniciar Sesión
         </RouterLink>
       </template>
+      
+      <RouterLink to="/cart" class="relative">
+      Carrito
+      <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2">
+        {{ totalItems }}
+      </span>
+    </RouterLink>
     </nav>
 
     <div class="header-right-side">
@@ -59,7 +66,11 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/authStore";
+import { useCartStore } from '../stores/cartStore';
+import { storeToRefs } from 'pinia';
 
+const cartStore = useCartStore();
+const { totalItems } = storeToRefs(cartStore);
 const authStore = useAuthStore();
 const router = useRouter();
 
