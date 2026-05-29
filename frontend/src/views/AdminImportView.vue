@@ -17,18 +17,18 @@ const file = ref(null);
 const handleFileUpload = (e) => { file.value = e.target.files[0]; };
 
 const submitImport = async () => {
+  const formData = new FormData();
+  formData.append('file', file.value);
+  
   try {
-    // 1. Obtener la cookie CSRF
-    await http.get('/sanctum/csrf-cookie'); 
-    
-    // 2. Hacer el POST
-    const formData = new FormData();
-    formData.append('file', file.value);
-    
-    await http.post('/products/import', formData);
-    alert('Importat!');
+    await http.get('/sanctum/csrf-cookie');
+    const response = await http.post('/products/import', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    alert(response.data.message); // Verás el mensaje del servidor
   } catch (error) {
-    console.error("Error:", error.response?.data);
+    console.error("Error completo:", error.response?.data);
+    alert('Error: ' + (error.response?.data.error || 'Fallo desconocido'));
   }
 };
 </script>
