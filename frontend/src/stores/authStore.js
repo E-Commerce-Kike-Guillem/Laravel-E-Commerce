@@ -4,16 +4,22 @@ import http from "../services/http";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
-    isAuthenticated: (state) => !!state.user
   }),
-
+  
+  getters: {
+    // Si necesitas lógica, usa un getter
+    isLoggedIn: (state) => !!state.user,
+    isAuthenticated: (state) => !!state.user,
+  },
 
   actions: {
     async login(credentials) {
-      await http.get("http://localhost/sanctum/csrf-cookie");
-
+      // 1. Llamada al proxy configurado en vite.config.ts
+      await http.get("/sanctum/csrf-cookie"); 
+      
       const response = await http.post("/login", credentials);
       this.user = response.data;
+      this.isAuthenticated = true;
     },
 
     async logout() {
@@ -23,7 +29,7 @@ export const useAuthStore = defineStore("auth", {
 
     async fetchUser() {
       try {
-        // Esta ruta debe existir en tu api.php: Route::middleware('auth:sanctum')->get('/user', ...);
+        // Al tener baseURL: '/api' en http.js, esto se traduce a /api/user
         const response = await http.get("/user");
         this.user = response.data;
         this.isAuthenticated = true;
