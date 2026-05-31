@@ -62,13 +62,10 @@
 </template>
 
 <script setup>
-// En aquesta pàgina no necessitem lògica de variables reactives
 </script>
 
 <style scoped>
-/* Importem l'arxiu CSS on tens guardats els estils específics */
 @import '@/assets/css/stylesAbout.css';
-/* Mantenim que ocupi tot l'ample de la pantalla */
 .about-page {
   width: 100%;
 }
