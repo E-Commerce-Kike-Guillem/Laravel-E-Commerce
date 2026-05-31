@@ -4,7 +4,7 @@
 
     <main class="featured-products ">
       <h2 class="page-title text-center mt-16 mb-10">Productes Destacats</h2>
-      
+      <br>
       <section class="showcase">
         
         <div class="product-card" v-for="product in featuredProducts" :key="product.id">
@@ -37,6 +37,7 @@
       </section>
       <section class="container mx-auto my-16 px-4">
   <h2 class="page-title text-center !mt-10">Categories</h2>
+  <br>
   <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
     
     <RouterLink 
