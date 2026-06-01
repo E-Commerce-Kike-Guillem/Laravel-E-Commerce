@@ -7,20 +7,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
-    host: '0.0.0.0',
-    port: 5174,
-    proxy: {
-      '/api': {
-        target: 'http://host.docker.internal:8080', // El puerto de tu Laravel
-        changeOrigin: true,
-      },
-      '/sanctum': { // <-- AÑADE ESTO
-    target: 'http://host.docker.internal:8080',
-    changeOrigin: true,
-  }
-    }
-  },
   plugins: [
     vue(),
     vueDevTools(),
@@ -31,4 +17,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  define: {
+    'process.env': process.env
+  }
 })

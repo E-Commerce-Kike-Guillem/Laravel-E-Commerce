@@ -31,6 +31,7 @@ jobs:
           key: ${{ secrets.FRONTEND_KEY }}
           source: "frontend/dist/*"
           target: "~/frontend/"
+          strip_components: 1
 
       - name: Restart Nginx container
         uses: appleboy/ssh-action@master
