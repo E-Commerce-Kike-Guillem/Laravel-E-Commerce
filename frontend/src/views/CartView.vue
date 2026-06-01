@@ -10,7 +10,7 @@
         <button @click="cartStore.removeFromCart(item.product.id)" class="text-red-500">Eliminar</button>
       </div>
       <div class="mt-4 font-bold text-xl">Total: {{ cartStore.totalPrice }}€</div>
-      <button class="bg-blue-600 text-white p-3 mt-4">Tramitar Comanda</button>
+      <button class="bg-[#243020] text-white !px-5 !py-3 !my-10 !rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-110 text-xl font-semibold">Tramitar Comanda</button>
     </div>
   </div>
 </template>

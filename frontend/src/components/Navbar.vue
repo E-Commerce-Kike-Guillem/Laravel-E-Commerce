@@ -28,13 +28,13 @@
 
       <template v-else>
         <RouterLink class="nav-link" to="/login" @click="isMenuOpen = false">
-          Iniciar Sesión
+          Iniciar Sessió
         </RouterLink>
       </template>
       
-      <RouterLink to="/cart" class="relative">
-      Carrito
-      <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full px-2">
+      <RouterLink to="/cart" class="nav-link">
+      Carret
+      <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-[] text-xs rounded-full px-2">
         {{ totalItems }}
       </span>
     </RouterLink>
