@@ -22,4 +22,4 @@ jobs:
         with:
           context: ./laravel
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:v2
