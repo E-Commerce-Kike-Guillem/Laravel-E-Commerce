@@ -14,8 +14,8 @@ return new class extends Migration
     Schema::create('orders', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->decimal('total_amount', 10, 2); // Hasta 99,999,999.99 €
-        $table->string('status')->default('pending'); // pending, paid, cancelled
+        $table->decimal('total_amount', 10, 2); 
+        $table->string('status')->default('pending'); 
         $table->timestamps();
     });
 }

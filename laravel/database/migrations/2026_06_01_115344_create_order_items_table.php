@@ -14,9 +14,9 @@ public function up()
     Schema::create('order_items', function (Blueprint $table) {
         $table->id();
         $table->foreignId('order_id')->constrained()->onDelete('cascade');
-        $table->foreignId('product_id')->nullable()->constrained()->onDelete('set null'); // Si borras un producto en el futuro, no se borra el historial
+        $table->foreignId('product_id')->nullable()->constrained()->onDelete('set null');
         $table->integer('quantity');
-        $table->decimal('price', 10, 2); // El precio congelado en ese instante
+        $table->decimal('price', 10, 2); 
         $table->timestamps();
     });
 }

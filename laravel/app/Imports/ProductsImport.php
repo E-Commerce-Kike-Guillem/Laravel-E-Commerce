@@ -15,8 +15,6 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
 
     public function model(array $row)
 {
-    // CUIDADO: Los nombres dentro de $row['nombre_columna'] 
-    // DEBEN coincidir exactamente con los nombres de la primera fila de tu Excel.
     
     return new Product([
         'sku'         => $row['sku'],
@@ -24,8 +22,8 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
         'description' => $row['description'],
         'price'       => $row['price'],
         'stock'       => $row['stock'],
-        'image'       => $row['image'],    // <-- ¿Está este campo?
-        'category'    => $row['category'], // <-- ¿Está este campo?
+        'image'       => $row['image'],    
+        'category'    => $row['category'],
     ]);
 }
 

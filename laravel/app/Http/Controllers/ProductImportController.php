@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class ProductImportController extends Controller
 {
-    // 1. Mostrar el formulari
     public function show()
     {
         return view('admin.import');
@@ -17,11 +16,9 @@ class ProductImportController extends Controller
 
     public function import(Request $request)
 {
-    // RESPUESTA DE PRUEBA: Si llega aquí, el 404/redirección desaparece
     return response()->json(['status' => 'Llegamos al controlador'], 200);
 }
 
-    // 2. Processar l'Excel
     public function store(Request $request)
 {
     $request->validate([
@@ -34,7 +31,6 @@ class ProductImportController extends Controller
         
         Log::info("Importación exitosa.");
         
-        // DEVOLVER JSON, NO back()
         return response()->json([
             'message' => "S'han importat correctament!", 
             'rows' => $import->rows
@@ -42,7 +38,6 @@ class ProductImportController extends Controller
 
     } catch (\Exception $e) {
         Log::error("Error: " . $e->getMessage());
-        // DEVOLVER JSON, NO back()
         return response()->json(['error' => $e->getMessage()], 500);
     }
 }

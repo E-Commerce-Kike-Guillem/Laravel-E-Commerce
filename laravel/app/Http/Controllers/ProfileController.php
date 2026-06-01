@@ -12,9 +12,7 @@ use Illuminate\Http\JsonResponse;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -22,15 +20,11 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
+
     public function update(ProfileUpdateRequest $request): JsonResponse
     {
-        // Valida y actualiza los datos básicos
         $request->user()->fill($request->validated());
 
-        // Si el usuario cambia el email, reseteamos la verificación
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
@@ -40,9 +34,7 @@ class ProfileController extends Controller
         return response()->json(['message' => 'Perfil actualitzat correctament']);
     }
 
-    /**
-     * Delete the user's account.
-     */
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
