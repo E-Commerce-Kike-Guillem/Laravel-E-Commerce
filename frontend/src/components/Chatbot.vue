@@ -11,7 +11,6 @@ onMounted(() => {
     const script = document.createElement('script');
     script.id = 'n8n-chat-script';
     script.type = 'module';
-    
     script.innerHTML = `
       import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
       
