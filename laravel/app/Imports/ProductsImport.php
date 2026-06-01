@@ -14,20 +14,20 @@ class ProductsImport implements ToModel, WithHeadingRow, WithValidation, SkipsEm
     public $rows = 0;
 
     public function model(array $row)
-    {
-        $this->rows++;
-
-        return Product::updateOrCreate(
-            ['sku' => $row['sku']],
-            [
-                'name'        => $row['name'],
-                'description' => $row['description'] ?? '',
-                'image'       => $row['img'] ?? '',
-                'price'       => $row['price'],
-                'stock'       => $row['stock'],
-            ]
-        );
-    }
+{
+    // CUIDADO: Los nombres dentro de $row['nombre_columna'] 
+    // DEBEN coincidir exactamente con los nombres de la primera fila de tu Excel.
+    
+    return new Product([
+        'sku'         => $row['sku'],
+        'name'        => $row['name'],
+        'description' => $row['description'],
+        'price'       => $row['price'],
+        'stock'       => $row['stock'],
+        'image'       => $row['image'],    // <-- ¿Está este campo?
+        'category'    => $row['category'], // <-- ¿Está este campo?
+    ]);
+}
 
     public function rules(): array
     {

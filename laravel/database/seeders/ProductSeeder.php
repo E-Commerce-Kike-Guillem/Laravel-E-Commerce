@@ -2,40 +2,27 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Product; // Importar el model!
+use App\Models\Product;
 
 class ProductSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        // Creem productes d'exemple
-        Product::create([
-            'sku' => 'A001',
-            'name' => 'Cafetera Premium',
-            'description' => 'Cafetera automàtica amb molinet integrat',
-            'price' => 129.99,
-            'stock' => 15,
-            'image' => 'img/cafetera.jpg'
-        ]);
-
-        Product::create([
-            'sku' => 'A002',
-            'name' => 'Tetera Elèctrica',
-            'description' => 'Tetera ràpida acer inoxidable',
-            'price' => 59.95,
-            'stock' => 10,
-            'image' => 'img/tetera.jpg'
-        ]);
+        $categories = ['collars', 'anells', 'polseres', 'arracades', 'piercings'];
         
-        Product::create([
-            'sku' => 'GEN-003',
-            'name' => 'Auriculars Bluetooth',
-            'description' => 'Cancel·lació de soroll activa',
-            'price' => 89.90,
-            'stock' => 50,
-            'image' => 'img/auriculars.jpg'
-        ]);
+        for ($i = 1; $i <= 20; $i++) {
+            $cat = $categories[array_rand($categories)];
+            Product::create([
+                'sku' => 'SKU-' . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'name' => 'Producte ' . $i . ' de ' . $cat,
+                'description' => 'Aquesta és la descripció detallada del producte número ' . $i . '.',
+                'price' => rand(10, 200) + 0.99,
+                'stock' => rand(5, 50),
+                // La ruta que pedías:
+                'image' => '../../public/contenido/productos/' . $cat . '.jpg', 
+                'category' => $cat,
+            ]);
+        }
     }
 }

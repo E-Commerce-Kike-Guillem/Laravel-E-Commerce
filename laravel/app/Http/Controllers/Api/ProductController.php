@@ -24,7 +24,7 @@ class ProductController extends Controller
         }
 
         // Retornem amb paginació de 10 elements
-        return ProductResource::collection($query->paginate(10));
+        return ProductResource::collection($query->paginate(50));
     }
 
     public function show($id)
