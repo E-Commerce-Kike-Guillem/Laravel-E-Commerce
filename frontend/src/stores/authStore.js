@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import http from "../services/http";
+import { useCartStore } from "./cartStore"; // 1. IMPORTACIÓN AÑADIDA
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -7,26 +8,29 @@ export const useAuthStore = defineStore("auth", {
   }),
 
   getters: {
-    // Si necesitas lógica, usa un getter
+    // Al ser getters, se calculan SOLOS cuando "state.user" cambia.
+    // Nunca debes hacer "this.isAuthenticated = true" manualmente.
     isLoggedIn: (state) => !!state.user,
     isAuthenticated: (state) => !!state.user,
   },
 
   actions: {
     async login(credentials) {
-      // 1. Llamada al proxy configurado en vite.config.ts
       await http.get("/sanctum/csrf-cookie");
 
       const response = await http.post("/login", credentials);
-      this.user = response.data;
-      this.isAuthenticated = true;
+      
+      // Con solo guardar el usuario, isAuthenticated pasa a true automáticamente
+      this.user = response.data; 
 
-      const cartStore = useCartStore();
+      const cartStore = useCartStore(); // Ahora sí funcionará porque está importado
       await cartStore.fetchCart();
     },
 
     async logout() {
       await http.post("/logout");
+      
+      // Al poner el usuario a null, isAuthenticated pasa a false automáticamente
       this.user = null;
 
       const cartStore = useCartStore();
@@ -35,18 +39,16 @@ export const useAuthStore = defineStore("auth", {
 
     async fetchUser() {
       try {
-        // Al tener baseURL: '/api' en http.js, esto se traduce a /api/user
         const response = await http.get("/user");
         this.user = response.data;
-        this.isAuthenticated = true;
       } catch (error) {
         this.user = null;
-        this.isAuthenticated = false;
       }
     },
 
     async register(userData) {
-      await http.get("http://localhost/sanctum/csrf-cookie");
+      // Corregido para usar la ruta relativa igual que en el login
+      await http.get("/sanctum/csrf-cookie");
 
       const response = await http.post("/register", userData);
 
