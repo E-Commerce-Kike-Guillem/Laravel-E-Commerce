@@ -35,9 +35,6 @@ jobs:
           script: |
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
             docker pull kikee282/laravel-app:latest
-            # Bajamos el contenedor viejo
             docker-compose -f ~/app/docker-compose.prod.yml down
-            # Levantamos el nuevo
             docker-compose -f ~/app/docker-compose.prod.yml up -d
-            # Ejecutamos migraciones
             docker exec laravel_app_container php artisan migrate --force
