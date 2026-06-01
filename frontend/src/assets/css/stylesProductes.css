@@ -306,3 +306,26 @@ select:focus {
     border-color: #243020;
     outline: none; /* Quita el borde azul por defecto de los navegadores */
 }
+
+.btn-cart-icon {
+  transition: all 0.3s ease;
+}
+
+/* Estado de éxito (cuando se añade el producto) */
+.btn-cart-icon.is-added {
+  background-color: #1b6e2f !important; /* Verde de éxito */
+  color: white !important;
+  border-color: #28a745 !important;
+  transform: scale(1.1); /* Efecto de aumento sutil */
+}
+
+/* Animación de "pop" para el icono del check */
+@keyframes popIcon {
+  0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+  70% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.btn-cart-icon.is-added i.fa-check {
+  animation: popIcon 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}

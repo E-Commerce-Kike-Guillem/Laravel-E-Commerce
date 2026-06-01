@@ -14,32 +14,49 @@
           </div>
 
           <nav class="profile-nav">
-            <a href="#" class="nav-item active"><i class="fas fa-user"></i> Detalls del compte</a>
-            <a href="#" class="nav-item"><i class="fas fa-box"></i> Les meves comandes</a>
+            <a href="#" 
+               class="nav-item" 
+               :class="{ active: activeTab === 'details' }" 
+               @click.prevent="activeTab = 'details'">
+               <i class="fas fa-user"></i> Detalls del compte
+            </a>
+            
+            <a href="#" 
+               class="nav-item" 
+               :class="{ active: activeTab === 'orders' }" 
+               @click.prevent="changeToOrdersTab">
+               <i class="fas fa-box"></i> Les meves comandes
+            </a>
+            
             <a href="#" class="nav-item"><i class="fas fa-map-marker-alt"></i> Adreces</a>
-            <button class="nav-item btn-logout"><i class="fas fa-sign-out-alt"></i> Tancar sessió</button>
+            <button @click="authStore.logout" class="nav-item btn-logout"><i class="fas fa-sign-out-alt"></i> Tancar sessió</button>
           </nav>
         </aside>
 
         <section class="profile-content">
-          <div class="content-header">
-            <h1 class="section-title">Configuració del Perfil</h1>
-            <p class="section-subtitle">Gestiona la teva informació personal i la seguretat del teu compte.</p>
-          </div>
+          
+          <div v-if="activeTab === 'details'">
+            <div class="content-header">
+              <h1 class="section-title">Configuració del Perfil</h1>
+              <p class="section-subtitle">Gestiona la teva informació personal i la seguretat del teu compte.</p>
+            </div>
 
-          <form @submit.prevent="updateProfile" class="modern-form">
-            
-            <div class="form-section">
+            <form @submit.prevent="updateProfile" class="modern-form">
+              <div class="form-section">
               <h3 class="form-section-title">Informació Personal</h3>
               <div class="form-grid">
+                
                 <div class="input-group">
                   <label>Nom d'usuari</label>
                   <input 
                     v-model="form.name" 
                     type="text" 
                     class="modern-input"
+                    :class="{ 'input-error': errors.name }"
                     placeholder="El teu nom complet"
+                    required
                   />
+                  <span v-if="errors.name" class="error-text">{{ errors.name[0] }}</span>
                 </div>
 
                 <div class="input-group">
@@ -48,8 +65,11 @@
                     v-model="form.email" 
                     type="email" 
                     class="modern-input"
+                    :class="{ 'input-error': errors.email }"
                     placeholder="correu@exemple.com"
+                    required
                   />
+                  <span v-if="errors.email" class="error-text">{{ errors.email[0] }}</span>
                 </div>
               </div>
             </div>
@@ -64,21 +84,77 @@
                   v-model="form.password" 
                   type="password" 
                   class="modern-input"
+                  :class="{ 'input-error': errors.password }"
                   placeholder="Deixa en blanc si no vols canviar-la"
                 />
-                <small class="input-hint">Utilitza un mínim de 8 caràcters amb lletres i números.</small>
+                <small class="input-hint" v-if="!errors.password">Utilitza un mínim de 8 caràcters amb lletres i números.</small>
+                <span v-if="errors.password" class="error-text">{{ errors.password[0] }}</span>
               </div>
             </div>
 
-            <div class="form-actions">
-              <button type="submit" class="btn-save">
-                <i class="fas fa-save"></i> Guardar canvis
-              </button>
+              <hr class="divider">
+
+              <div class="form-actions">
+                <button type="submit" class="btn-save">
+                  <i class="fas fa-save"></i> Guardar canvis
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div v-else-if="activeTab === 'orders'">
+            <div class="content-header">
+              <h1 class="section-title">Historial de Comandes</h1>
+              <p class="section-subtitle">Revisa l'estat i el detall de les teves compres anteriors.</p>
             </div>
 
-          </form>
+            <div v-if="loadingOrders" class="text-center py-4">
+              <p>Carregant comandes...</p>
+            </div>
+
+            <div v-else-if="orders.length === 0" class="empty-orders">
+              <i class="fas fa-box-open empty-icon"></i>
+              <h3>Encara no has fet cap comanda</h3>
+              <p>Quan compris alguna de les nostres joies, apareixerà aquí.</p>
+              <RouterLink to="/products" class="btn-save mt-3" style="display:inline-flex; text-decoration:none;">
+                Veure productes
+              </RouterLink>
+            </div>
+
+            <div v-else class="orders-list">
+              <div v-for="order in orders" :key="order.id" class="order-card">
+                
+                <div class="order-header">
+                  <div>
+                    <span class="order-id">Comanda #{{ order.id }}</span>
+                    <span class="order-date">{{ formatDate(order.created_at) }}</span>
+                  </div>
+                  <span class="status-badge" :class="order.status.toLowerCase()">
+                    {{ translateStatus(order.status) }}
+                  </span>
+                </div>
+
+                <div class="order-items">
+                  <div v-for="item in order.items" :key="item.id" class="order-item-row">
+                    <div class="item-name">
+                      <span class="item-qty">{{ item.quantity }}x</span> 
+                      {{ item.product ? item.product.name : 'Producte descatalogat' }}
+                    </div>
+                    <div class="item-price">{{ item.price }} €</div>
+                  </div>
+                </div>
+
+                <div class="order-footer">
+                  <span>Total pagat:</span>
+                  <span class="order-total">{{ order.total_amount }} €</span>
+                </div>
+                
+              </div>
+            </div>
+
+          </div>
+
         </section>
-        
       </div>
     </div>
   </main>
@@ -86,11 +162,34 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import * as yup from 'yup'; // <-- 1. Importamos Yup
 import http from '../services/http';
 import { useAuthStore } from '@/stores/authStore';
 
 const authStore = useAuthStore();
+
+// --- LÓGICA DE PESTAÑAS ---
+const activeTab = ref('details'); 
+
+// --- LÓGICA DEL PERFIL ---
 const form = ref({ name: '', email: '', password: '' });
+const errors = ref({}); 
+
+// 2. Definimos el esquema de validación de Yup
+const profileSchema = yup.object().shape({
+  name: yup.string()
+    .required('El nom és obligatori'),
+  email: yup.string()
+    .email('El format del correu no és vàlid')
+    .required('El correu electrònic és obligatori'),
+  password: yup.string()
+    // Test personalizado: Si el campo está vacío, es válido. Si tiene texto, debe ser >= 8
+    .test(
+      'len',
+      'La contrasenya ha de tindre almenys 8 caràcters',
+      (val) => !val || val.length >= 8
+    )
+});
 
 onMounted(async () => {
   if (authStore.user) {
@@ -100,20 +199,79 @@ onMounted(async () => {
 });
 
 const updateProfile = async () => {
+  // Limpiamos los errores anteriores
+  errors.value = {}; 
+  
   try {
+    // 3. PASO CLAVE: Validamos con Yup antes de contactar con el servidor
+    // abortEarly: false hace que Yup compruebe todos los campos a la vez, no solo el primero que falle
+    await profileSchema.validate(form.value, { abortEarly: false });
+
+    // Si pasa la validación de Yup, hacemos la petición a Laravel
     await http.get('/sanctum/csrf-cookie');
     await http.patch('/profile', form.value);
     
     authStore.user.name = form.value.name;
     authStore.user.email = form.value.email;
     
+    form.value.password = '';
+    
     alert('Perfil actualitzat correctament!');
   } catch (error) {
-    console.error("Error:", error);
+    // 4. Capturamos errores de validación del Frontend (Yup)
+    if (error instanceof yup.ValidationError) {
+      const yupErrors = {};
+      error.inner.forEach((err) => {
+        // Los guardamos como Array para que coincida con el HTML que ya tienes (errors.campo[0])
+        yupErrors[err.path] = [err.message];
+      });
+      errors.value = yupErrors;
+    } 
+    // 5. Capturamos errores del Backend (Laravel) - Ej: El email ya existe en la BD
+    else if (error.response && error.response.status === 422) {
+      errors.value = error.response.data.errors;
+    } 
+    // Otros errores (Ej: servidor caído)
+    else {
+      console.error("Error desconegut:", error);
+      alert("S'ha produït un error al guardar les dades.");
+    }
   }
 };
-</script>
 
+// --- LÓGICA DE PEDIDOS (Igual que antes) ---
+const orders = ref([]);
+const loadingOrders = ref(false);
+
+const changeToOrdersTab = async () => {
+  activeTab.value = 'orders';
+  loadingOrders.value = true;
+  
+  try {
+    const response = await http.get('/orders');
+    orders.value = response.data;
+  } catch (error) {
+    console.error("Error al carregar les comandes:", error);
+  } finally {
+    loadingOrders.value = false;
+  }
+};
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('ca-ES', options);
+};
+
+const translateStatus = (status) => {
+  const statuses = {
+    'pending': 'Pendent',
+    'paid': 'Pagat',
+    'shipped': 'Enviat',
+    'cancelled': 'Cancel·lat'
+  };
+  return statuses[status] || status;
+};
+</script>
 <style scoped>
 
 .page-content-wrapper {
@@ -361,5 +519,129 @@ const updateProfile = async () => {
   background-color: #1a2317;
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(36, 48, 32, 0.2);
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9fafa;
+  border-radius: 12px;
+  border: 1px dashed #ccc;
+}
+.empty-icon {
+  font-size: 3rem;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+.empty-orders h3 {
+  font-family: 'Georgia', serif;
+  color: #333;
+  margin-bottom: 10px;
+}
+.empty-orders p {
+  color: #777;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-card {
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.order-header {
+  background-color: #fdfdfd;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-id {
+  font-weight: bold;
+  color: #222;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.order-date {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Colores para los diferentes estados del pedido */
+.status-badge.pending { background-color: #fff3cd; color: #856404; }
+.status-badge.paid { background-color: #d4edda; color: #155724; }
+.status-badge.shipped { background-color: #cce5ff; color: #004085; }
+.status-badge.cancelled { background-color: #f8d7da; color: #721c24; }
+
+.order-items {
+  padding: 15px 20px;
+}
+
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  color: #555;
+}
+
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+.item-qty {
+  font-weight: bold;
+  color: #222;
+  margin-right: 8px;
+}
+
+.order-footer {
+  background-color: #f9fafa;
+  padding: 15px 20px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #555;
+}
+
+.order-total {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #243020;
+}
+
+input-error {
+  border: 2px solid #dc3545 !important;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+  border-color: #dc3545 !important;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: block;
+  margin-top: 6px;
 }
 </style>

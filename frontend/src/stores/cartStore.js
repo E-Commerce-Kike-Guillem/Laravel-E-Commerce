@@ -1,7 +1,6 @@
-// frontend/src/stores/cartStore.js
 import { defineStore } from "pinia";
 import http from "../services/http";
-import { useAuthStore } from "./authStore"; // 1. IMPORTA AQUÍ
+import { useAuthStore } from "./authStore"; 
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -20,7 +19,7 @@ export const useCartStore = defineStore("cart", {
     },
 
     async addToCart(product) {
-      const authStore = useAuthStore(); // 2. USA EL HOOK CORRECTAMENTE
+      const authStore = useAuthStore(); 
       
       if (authStore.isAuthenticated) {
         await http.post("/cart", { product_id: product.id, quantity: 1 });
@@ -32,13 +31,23 @@ export const useCartStore = defineStore("cart", {
     },
 
     async removeFromCart(productId) {
-      const authStore = useAuthStore(); // 3. IMPORTANTE: Definir authStore aquí también
+      const authStore = useAuthStore(); 
 
       if (authStore.isAuthenticated) {
         await http.delete(`/cart/${productId}`);
       }
 
       this.items = this.items.filter(item => item.product.id !== productId);
+    },
+    async checkoutOrder() {
+      try {
+        const response = await http.post("/checkout");
+        this.clearCart();
+        return { success: true, order: response.data.order };
+      } catch (error) {
+        console.error("Error al tramitar la comanda:", error);
+        return { success: false, message: error.response?.data?.error || "Error desconegut" };
+      }
     },
   },
   persist: true,

@@ -45,8 +45,13 @@
                 Veure més
               </RouterLink>
 
-              <button class="btn-cart-icon" @click="cartStore.addToCart(product)" title="Afegir al carret">
-                <i class="fas fa-shopping-basket"></i>
+              <button 
+                class="btn-cart-icon" 
+                :class="{ 'is-added': addedProductId === product.id }"
+                @click="handleAddToCart(product)" 
+                title="Afegir al carret"
+              >
+                <i :class="addedProductId === product.id ? 'fas fa-check' : 'fas fa-shopping-basket'"></i>
               </button>
             </div>
           </div>
@@ -101,6 +106,20 @@ const handleCategoryChange = (event) => {
   } else {
     router.push({ path: '/products', query: { category } });
   }
+};
+
+const addedProductId = ref(null);
+
+const handleAddToCart = async (product) => {
+  await cartStore.addToCart(product);
+  
+  addedProductId.value = product.id;
+  
+  setTimeout(() => {
+    if (addedProductId.value === product.id) {
+      addedProductId.value = null;
+    }
+  }, 1000);
 };
 
 </script>

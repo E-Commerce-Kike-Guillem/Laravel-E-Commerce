@@ -32,12 +32,12 @@
         </RouterLink>
       </template>
       
-      <RouterLink to="/cart" class="nav-link">
-      Carret
-      <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-[] text-xs rounded-full px-2">
-        {{ totalItems }}
-      </span>
-    </RouterLink>
+      <RouterLink to="/cart" class="nav-link cart-link">
+        Carret
+        <span v-if="totalItems > 0" class="cart-badge">
+          {{ totalItems }}
+        </span>
+      </RouterLink>
     </nav>
 
     <div class="header-right-side">
