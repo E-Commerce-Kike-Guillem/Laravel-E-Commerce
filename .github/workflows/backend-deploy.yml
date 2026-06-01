@@ -1,40 +1,34 @@
-name: Backend CI/CD 2
+name: Backend Deploy Pipeline
 
 on:
   push:
-    branches: [ main ]
-    paths: ['laravel/**']
+    branches:
+      - main  # Asegúrate de que esta es la rama donde haces los push
 
 jobs:
-  build-and-push:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: ./laravel
-          file: ./laravel/Dockerfile
-          push: true
-          pull: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
-      
-      - name: Deploy to AWS
+      - name: Deploy to AWS via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ubuntu
           key: ${{ secrets.AWS_KEY }}
           script: |
+            # 1. Login en Docker Hub
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            
+            # 2. Descargar la versión más reciente de la imagen
             docker pull kikee282/laravel-app:latest
-            docker-compose -f ~/app/docker-compose.prod.yml down
-            docker-compose -f ~/app/docker-compose.prod.yml up -d
+            
+            # 3. Levantar el contenedor con el archivo de producción
+            # Usamos -f para especificar el archivo y --force-recreate para refrescar
+            docker-compose -f ~/app/docker-compose.prod.yml up -d --force-recreate
+            
+            # 4. Ejecutar migraciones automáticamente
+            # Asegúrate de que el nombre del contenedor es exacto al de tu docker-compose.prod.yml
             docker exec laravel_app_container php artisan migrate --force
