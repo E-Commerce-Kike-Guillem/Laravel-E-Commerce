@@ -23,4 +23,5 @@ jobs:
           context: ./laravel
           file: ./laravel/Dockerfile
           push: true
+          pull: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
