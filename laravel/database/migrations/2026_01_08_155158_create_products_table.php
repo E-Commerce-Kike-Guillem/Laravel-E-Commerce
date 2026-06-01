@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
 {
     Schema::create('products', function (Blueprint $table) {
-        $table->id(); // ID autoincremental
-        $table->string('sku')->unique(); // Codi únic
+        $table->id(); 
+        $table->string('sku')->unique(); 
         $table->string('name');
         $table->text('description')->nullable();
-        $table->decimal('price', 10, 2); // 10 dígits total, 2 decimals
+        $table->decimal('price', 10, 2); 
         $table->integer('stock')->default(0);
-        $table->string('image')->nullable(); // Ruta de la imatge
-        $table->string('category')->nullable(); // Opcional segons l'enunciat
-        $table->timestamps(); // created_at i updated_at automàtics
+        $table->string('image')->nullable(); 
+        $table->string('category')->nullable(); 
+        $table->timestamps(); 
     });
 }
 

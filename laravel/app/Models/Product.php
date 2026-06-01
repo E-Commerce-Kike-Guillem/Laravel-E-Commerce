@@ -9,7 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Camps que permetem omplir massivament
     protected $fillable = [
         'sku',
         'name',

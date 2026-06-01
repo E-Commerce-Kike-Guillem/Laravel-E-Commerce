@@ -12,10 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // 1. Necesario para que Laravel permita la autenticación mediante cookies (SPA)
         $middleware->statefulApi();
 
-        // 2. Aquí mantenemos tus aliases personalizados (como el de 'admin')
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
@@ -24,5 +22,4 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
     })->create();

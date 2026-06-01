@@ -16,14 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        //$this->call(ProductSeeder::class);
-
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => Hash::make('password'), // Asegúrate de esto
-            'role' => 'admin', // Asegúrate de incluirlo si es requerido
+            'password' => Hash::make('password'), 
+            'role' => 'admin', 
         ]);
     }
 }

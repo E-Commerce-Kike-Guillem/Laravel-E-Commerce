@@ -12,7 +12,6 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Log para depurar (puedes verlo en storage/logs/laravel.log)
         Log::info('Check Admin: ', [
             'user' => Auth::user() ? Auth::user()->email : 'no user',
             'role' => Auth::user() ? Auth::user()->role : 'no role'
