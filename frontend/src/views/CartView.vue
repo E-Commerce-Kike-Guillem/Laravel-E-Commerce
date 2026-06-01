@@ -27,7 +27,7 @@
           <div v-for="item in cartStore.items" :key="item.product.id" class="cart-item">
             
             <div class="item-product">
-              <img :src="item.product.image ? `/${item.product.image}` : '/contenido/placeholder.jpg'" :alt="item.product.name" class="item-img" />
+              <img :src="'/contenido/productos/' + item.product.image" :alt="item.product.name" class="item-img" />
               <div class="item-details">
                 <h3 class="item-name">{{ item.product.name }}</h3>
                 <p class="item-unit-price">{{ item.product.price }} € / unitat</p>
