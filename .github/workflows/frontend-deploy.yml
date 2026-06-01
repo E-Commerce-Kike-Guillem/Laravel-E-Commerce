@@ -29,7 +29,7 @@ jobs:
           host: ${{ secrets.FRONTEND_HOST }}
           username: ${{ secrets.FRONTEND_USER }}
           key: ${{ secrets.FRONTEND_KEY }}
-          source: "dist/*"
+          source: "frontend/dist/*"
           target: "~/frontend/"
 
       - name: Restart Nginx container
