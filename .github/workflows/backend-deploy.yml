@@ -22,4 +22,6 @@ jobs:
         with:
           context: ./laravel
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:v2
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/laravel-app:latest
+          build-args: |
+            CACHE_DATE=$(date +%s)
