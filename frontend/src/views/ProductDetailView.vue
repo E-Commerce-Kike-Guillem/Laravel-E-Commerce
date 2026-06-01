@@ -7,7 +7,7 @@
 
     <div v-else-if="product" class="product-detail-card">
       <div class="detail-image">
-        <img :src="product.image ? `/${product.image}` : '/contenido/placeholder.jpg'" alt="Imatge del producte">
+        <img :src="'/contenido/productos/' + product.image || '/contenido/placeholder.jpg'" alt="Imatge del producte">
       </div>
       
       <div class="detail-info">

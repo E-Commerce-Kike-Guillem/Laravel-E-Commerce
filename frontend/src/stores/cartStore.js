@@ -40,15 +40,21 @@ export const useCartStore = defineStore("cart", {
       this.items = this.items.filter(item => item.product.id !== productId);
     },
     async checkoutOrder() {
-      try {
-        const response = await http.post("/checkout");
-        this.clearCart();
-        return { success: true, order: response.data.order };
-      } catch (error) {
-        console.error("Error al tramitar la comanda:", error);
-        return { success: false, message: error.response?.data?.error || "Error desconegut" };
-      }
-    },
+  try {
+    const response = await http.post("/checkout");
+    this.clearCart();
+    return { success: true, order: response.data.order };
+  } catch (error) {
+    // Esto te dará más pistas sobre qué está pasando en el servidor
+    if (error.response) {
+      console.error("Detalle del servidor:", error.response.data);
+    }
+    return { 
+      success: false, 
+      message: error.response?.data?.message || "Error al procesar el checkout" 
+    };
+  }
+}
   },
   persist: true,
 });
