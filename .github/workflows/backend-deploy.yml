@@ -27,7 +27,7 @@ jobs:
             
             # 3. Levantar el contenedor con el archivo de producción
             # Usamos -f para especificar el archivo y --force-recreate para refrescar
-            docker-compose -f ~/app/docker-compose.prod.yml up -d --force-recreate
+            docker compose -f ~/app/docker-compose.prod.yml up -d --force-recreate
             
             # 4. Ejecutar migraciones automáticamente
             # Asegúrate de que el nombre del contenedor es exacto al de tu docker-compose.prod.yml
