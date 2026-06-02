@@ -24,10 +24,11 @@
               
               <button 
                 class="btn-cart-icon" 
-                @click="addToCart(product)"
-                title="Afegir al carret" 
+                :class="{ 'is-added': addedProductId === product.id }"
+                @click="handleAddToCart(product)" 
+                title="Afegir al carret"
               >
-                <i class="fas fa-shopping-basket"></i>
+                <i :class="addedProductId === product.id ? 'fas fa-check' : 'fas fa-shopping-basket'"></i>
               </button>
             </div>
           </div>
@@ -73,14 +74,17 @@ const router = useRouter();
 
 const featuredProducts = ref([])
 
-const goToCategory = (cat) => {
-  store.setCategory(cat); // Guardamos la categoría en memoria
-  router.push('/products'); // Navegamos a la vista SIN parámetros
+const handleAddToCart = async (product) => {
+  await cartStore.addToCart(product);
+  
+  addedProductId.value = product.id;
+  
+  setTimeout(() => {
+    if (addedProductId.value === product.id) {
+      addedProductId.value = null;
+    }
+  }, 1000);
 };
-
-const addToCart = (product) => {
-  alert(`${product.name} s'ha afegit al carret!`)
-}
 
 const fetchFeaturedProducts = async () => {
   try {
