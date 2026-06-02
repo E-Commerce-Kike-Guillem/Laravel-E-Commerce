@@ -1,27 +1,26 @@
-# Proyecto E-Commerce (Laravel)
-
+# Proyecto E-Commerce (Laravel + Vue 3)
 
 ## Descripción
 
-### ¿Qué es E-Commerce Laravel?
+### ¿Qué es E-Commerce Laravel + Vue?
 
-Es una plataforma de comercio electrónico desarrollada íntegramente con el framework Laravel. Este proyecto gestiona:
+Es una plataforma de comercio electrónico moderna con una arquitectura desacoplada. Cuenta con una API REST desarrollada en **Laravel** para el backend y una interfaz de usuario dinámica (SPA) construida con **Vue.js 3** en el frontend.
 
-* Catálogo completo de productos
-* Gestión de usuarios (registro, login, perfiles)
-* Administración de productos
-* Importación de datos desde un sistema legacy en PHP plano
+Este proyecto gestiona:
 
-### ¿Por qué lo usamos/desarrollamos?
-
-Este proyecto se desarrolla para establecer una **arquitectura robusta, escalable y mantenible** utilizando metodologías ágiles.
+* Catálogo completo de productos.
+* Carrito de la compra interactivo y pasarela de pago (Checkout) simulada.
+* Historial de pedidos inmutable mediante transacciones de base de datos.
+* Gestión de usuarios (registro, login, perfiles) protegida mediante **Laravel Sanctum**.
+* Administración e importación de datos desde un sistema legacy en PHP plano.
 
 La finalidad principal es disponer de una tienda online completa que ponga en práctica:
 
-* Patrón MVC
-* Protección de rutas mediante middleware (ej. panel de administrador)
-* Uso de bases de datos relacionales con migraciones y seeders
-* Despliegue estructurado utilizando contenedores Docker
+* Patrón MVC en el backend y reactividad en el frontend.
+* Autenticación basada en cookies/tokens (SPA Auth).
+* Uso de bases de datos relacionales con migraciones y seeders.
+* Despliegue estructurado utilizando contenedores Docker (Laravel Sail).
+* Gestión de estado global en el cliente (Pinia) y validaciones asíncronas (Yup).
 
 También sirve como demostración práctica del módulo **Despliegue de Aplicaciones Web (DAW)**.
 
@@ -29,45 +28,42 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ## Tabla de Contenidos
 
-- [Tecnologías utilizadas](#tecnologías-utilizadas)
-- [Puesta en marcha](#puesta-en-marcha)
-- [Entornos](#entornos)
-- [Guía de Contribución](#guía-de-contribución)
-- [Documentación de desarrollo](#documentación-de-desarrollo)
-- [Lista de Contribuidores](#lista-de-contribuidores)
-- [Inspiración](#inspiración)
-- [Licencia](#licencia)
+* [Tecnologías utilizadas](#tecnologías-utilizadas)
+* [Puesta en marcha](#puesta-en-marcha)
+* [Entornos](#entornos)
+* [Guía de Contribución](#guía-de-contribución)
+* [Documentación de desarrollo](#documentación-de-desarrollo)
 
 ---
 
 ## Tecnologías utilizadas
 
-### Backend
+### Backend (API REST)
 
-* PHP 8.x
-* Laravel 11.x
+* PHP 8.2
+* Laravel 12
+* Laravel Sanctum (Autenticación SPA)
 
-### Frontend
+### Frontend (SPA)
 
-* Blade
-* TailwindCSS
-* Vite
-* JavaScript
+* Vue.js 3 (Composition API)
+* Pinia (Gestión del estado global)
+* Vue Router (Enrutamiento del lado del cliente)
+* Yup (Validación de formularios)
+* Vite (Bundler)
+* Tailwind CSS
+* CSS personalizado
 
 ### Base de datos
 
-* MySQL / SQLite
-* Gestionado con migraciones de Laravel
-
-### Testing
-
-* Pest
-* PHPUnit
+* MySQL
+* Gestionado mediante migraciones de Laravel
 
 ### Infraestructura y despliegue
 
 * Docker
-* Docker Compose (incluye entorno de desarrollo con `compose.yaml`)
+* Docker Compose
+* Laravel Sail
 
 ### Control de versiones
 
@@ -78,57 +74,73 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ## Puesta en marcha
 
-Para ejecutar este proyecto en tu entorno local:
-
 ### Requisitos previos
 
-* PHP >= 8.2
-* Composer
-* Node.js y npm
-* Docker (opcional pero recomendado)
+Antes de comenzar, asegúrate de tener instalado:
+
+* Docker Desktop (o Docker Engine + Docker Compose).
+* Composer (opcional si utilizas contenedores para la instalación).
+* Node.js y npm.
 
 ---
 
 ### Instalación
 
-#### 1. Clona el repositorio
+#### 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/tu-usuario/laravel-e-commerce.git
 cd laravel-e-commerce/laravel
 ```
 
-#### 2. Instala dependencias
+#### 2. Instalar dependencias del backend
 
 ```bash
 composer install
-npm install
 ```
 
-#### 3. Configura variables de entorno
+#### 3. Configurar variables de entorno
 
 ```bash
 cp .env.example .env
-php artisan key:generate
 ```
 
-#### 4. Levanta base de datos y servicios (Docker)
+Asegúrate de configurar correctamente:
+
+* Credenciales de la base de datos.
+* `SANCTUM_STATEFUL_DOMAINS`.
+* URLs del frontend y backend.
+
+#### 4. Levantar los contenedores con Laravel Sail
 
 ```bash
-docker-compose up -d
+./vendor/bin/sail up -d
 ```
 
-#### 5. Ejecuta migraciones y seeders
+#### 5. Generar clave de aplicación y cargar la base de datos
 
 ```bash
-php artisan migrate --seed
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
-#### 6. Compila assets e inicia servidor
+#### 6. Instalar dependencias del frontend y ejecutar Vite
 
 ```bash
+npm install
 npm run dev
-php artisan serve
+```
+
+La API estará disponible en:
+
+```text
+http://localhost
+```
+
+El frontend se ejecutará normalmente en:
+
+```text
+http://localhost:5174
 ```
 
 ---
@@ -137,19 +149,7 @@ php artisan serve
 
 ### Desarrollo
 
-Entorno local en la máquina de cada desarrollador:
-
-```
-http://localhost:8000
-```
-
-### Producción
-
-Añadir URL de la plataforma desplegada, por ejemplo:
-
-```
-https://ecommerce-ejemplo.com
-```
+Entorno local para cada desarrollador utilizando Docker y Laravel Sail.
 
 ---
 
@@ -157,20 +157,20 @@ https://ecommerce-ejemplo.com
 
 Para contribuir al proyecto:
 
-1. Lee la documentación del flujo de trabajo antes de subir código
-2. Abre un **Issue** describiendo el bug o mejora
-3. Crea una rama desde main:
+1. Lee la documentación del flujo de trabajo.
+2. Abre un Issue describiendo el error o mejora.
+3. Crea una nueva rama desde `main`:
 
 ```bash
 git checkout -b feature/nombre-de-la-mejora
 ```
 
-4. Haz commits lógicos, atómicos y descriptivos
-5. Sube tus cambios y abre un Pull Request
-6. El código debe pasar los tests:
+4. Realiza commits lógicos, atómicos y descriptivos.
+5. Sube tus cambios y abre un Pull Request.
+6. Verifica que todos los tests pasan correctamente:
 
 ```bash
-php artisan test
+./vendor/bin/sail artisan test
 ```
 
 ---
@@ -182,29 +182,10 @@ Toda la documentación relacionada con:
 * Gantt
 * Sprints
 * Riesgos Laborales
+* Diagramas y análisis
 
 se encuentra en la carpeta:
 
-```
+```text
 /Documentació
 ```
-
-También disponible en la **Wiki del proyecto**.
-
----
-
-## Lista de Contribuidores
-
-*(Añadir aquí los colaboradores del proyecto)*
-
----
-
-## Inspiración
-
-*(Añadir referencias o proyectos similares si procede)*
-
----
-
-## Licencia
-
-Este proyecto se distribuye bajo los términos de la **Licencia MIT** incluida en el repositorio.
