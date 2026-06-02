@@ -48,4 +48,3 @@ jobs:
             
             # Migraciones
             docker exec laravel_app_container php artisan migrate --force
-            docker exec laravel_app_container php artisan db:seed --force
