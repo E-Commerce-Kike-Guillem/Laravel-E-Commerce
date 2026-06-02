@@ -45,7 +45,7 @@
         <button type="submit" class="btn-auth" :disabled="loading">
           {{ loading ? "Carregant..." : "Entrar" }}
         </button>
-        <a href="googleLoginUrl" class="btn-google">
+        <a href="https://api.projecte05.ddaw.es/api/auth/google" class="btn-google">
   <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo" />
   <span>Iniciar sesión con Google</span>
 </a>
@@ -75,7 +75,6 @@ const form = ref({ email: "", password: "" });
 const errors = ref({});
 const errorMsg = ref("");
 const loading = ref(false);
-const googleLoginUrl = ref(`${import.meta.env.VITE_API_URL}/auth/google`);
 const authStore = useAuthStore();
 const router = useRouter();
 

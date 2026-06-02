@@ -77,6 +77,8 @@ class AuthController extends Controller
     request()->session()->regenerate();
 
     // Redirige al frontend (Vue)
-    return redirect('http://localhost:5174');
+    $frontendUrl = env('FRONTEND_URL', 'https://www.projecte05.ddaw.es');
+    
+    return redirect($frontendUrl);
 }
 }
