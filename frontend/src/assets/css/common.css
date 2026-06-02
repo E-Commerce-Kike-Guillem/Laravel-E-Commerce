@@ -1,4 +1,3 @@
-/* src/styles/common.css */
 
 :root {
     --font-main: 'Georgia', serif;
@@ -22,14 +21,13 @@ body {
 main {
     flex: 1;
     width: 100%;
-    margin-top: var(--header-height); /* Evita que el header tape el contenido */
+    margin-top: var(--header-height); 
 }
 
 a { text-decoration: none; color: inherit; transition: color 0.2s; }
 ul { list-style: none; margin: 0; padding: 0; }
 img { max-width: 100%; display: block; }
 
-/* --- ENLACES DEL MENÚ --- */
 .nav-link {
     font-family: var(--font-ui);
     font-size: 1.2rem;
@@ -48,13 +46,12 @@ img { max-width: 100%; display: block; }
     transform: scale(1.05);
 }
 
-/* --- HEADER PRINCIPAL --- */
 .header-exacto {
     height: var(--header-height);
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Empuja el logo a la izq. y el menú/botón a la der. */
+    justify-content: space-between; 
     background-color: white; 
     position: fixed;
     top: 0;
@@ -70,7 +67,6 @@ img { max-width: 100%; display: block; }
     object-fit: contain;
 }
 
-/* Menú Escritorio */
 .nav-links-clean {
     position: absolute;
     left: 50%;
@@ -87,7 +83,7 @@ img { max-width: 100%; display: block; }
 }
 
 .menu-toggle-btn {
-    display: none; /* Oculto en PC */
+    display: none;
     background: none;
     border: none;
     font-size: 1.8rem;
@@ -95,7 +91,6 @@ img { max-width: 100%; display: block; }
     cursor: pointer;
 }
 
-/* --- FOOTER --- */
 .main-footer {
     width: 100%;
     background-color: #243020;
@@ -108,35 +103,30 @@ img { max-width: 100%; display: block; }
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
-    gap: 8px; /* Separación elegante entre la palabra "Carret" y el número */
+    gap: 8px;
 }
 
 .cart-badge {
-    background-color: #243020; /* Tu verde corporativo */
+    background-color: #243020; 
     color: white;
     font-size: 0.75rem;
     font-weight: bold;
     font-family: var(--font-ui);
     
-    /* Forma de píldora perfecta */
     height: 22px;
     min-width: 22px;
     border-radius: 50px;
     padding: 0 6px;
     
-    /* Centrado interno del número */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     
-    /* Una sombra muy sutil para darle volumen */
     box-shadow: 0 2px 6px rgba(36, 48, 32, 0.3);
     
-    /* Pequeña animación cuando cambia el número */
     transition: transform 0.2s ease;
 }
 
-/* Efecto hover sobre el enlace que hace reaccionar también a la burbuja */
 .cart-link:hover .cart-badge {
     transform: scale(1.1);
 }
@@ -152,35 +142,30 @@ img { max-width: 100%; display: block; }
 .social-icons { display: flex; gap: 15px; }
 .social-icons a { font-size: 1.5rem; color: white; }
 
-/* --- RESPONSIVE --- */
 
 @media (max-width: 950px) {
-    /* 1. Mostramos el botón Hamburguesa */
     .menu-toggle-btn {
         display: block;
     }
 
-    /* 2. Convertimos el Menú en una Persiana Oculta */
     .nav-links-clean {
         position: absolute;
-        top: 100px; /* Empieza exactamente donde acaba la barra blanca */
+        top: 100px; 
         left: 0;
         width: 100%;
         background-color: white;
-        transform: none; /* Quitamos el centrado de PC */
+        transform: none; 
         flex-direction: column;
         gap: 0;
         
-        /* Magia para que aparezca/desaparezca */
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease-in-out;
         box-shadow: 0 10px 15px rgba(0,0,0,0.1);
     }
 
-    /* Cuando Vue añade 'is-open', la persiana baja */
     .nav-links-clean.is-open {
-        max-height: 500px; /* Altura máxima para que entren todos los enlaces */
+        max-height: 500px; 
         border-top: 1px solid #eee;
     }
 

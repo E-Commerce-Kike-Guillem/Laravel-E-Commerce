@@ -74,16 +74,9 @@ const router = useRouter();
 
 const featuredProducts = ref([])
 
-const handleAddToCart = async (product) => {
-  await cartStore.addToCart(product);
-  
-  addedProductId.value = product.id;
-  
-  setTimeout(() => {
-    if (addedProductId.value === product.id) {
-      addedProductId.value = null;
-    }
-  }, 1000);
+const goToCategory = (cat) => {
+  store.setCategory(cat); 
+  router.push('/products'); 
 };
 
 const fetchFeaturedProducts = async () => {
@@ -91,7 +84,6 @@ const fetchFeaturedProducts = async () => {
     const response = await api.get('/products')
     const allProducts = response.data.data || response.data
     
-    // Seleccionamos 3 aleatorios
     featuredProducts.value = allProducts
       .sort(() => 0.5 - Math.random())
       .slice(0, 3)

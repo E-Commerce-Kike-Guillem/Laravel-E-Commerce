@@ -25,7 +25,7 @@ const submitImport = async () => {
     const response = await http.post('/products/import', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-    alert(response.data.message); // Verás el mensaje del servidor
+    alert(response.data.message); 
   } catch (error) {
     console.error("Error completo:", error.response?.data);
     alert('Error: ' + (error.response?.data.error || 'Fallo desconocido'));

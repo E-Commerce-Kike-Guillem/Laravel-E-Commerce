@@ -1,6 +1,3 @@
-/* src/styles/stylesAuth.css */
-
-/* --- CONFIGURACIÓN GENERAL --- */
 body {
     background-color: #fcfcfc;
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -9,7 +6,7 @@ body {
     padding: 40px 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* CAMBIO IMPORTANTE */
+    align-items: flex-start; 
     min-height: 100vh;
     box-sizing: border-box;
 }
@@ -25,14 +22,12 @@ body {
     text-align: center;
 }
 
-/* Logo */
 .auth-logo img {
-    height: 60px; /* Tamaño del logo */
+    height: 60px; 
     margin-bottom: 20px;
     object-fit: contain;
 }
 
-/* Títulos */
 h2 {
     font-family: 'Georgia', serif;
     font-size: 1.8rem;
@@ -47,7 +42,6 @@ h2 {
     margin-bottom: 30px;
 }
 
-/* --- FORMULARIO --- */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -80,7 +74,6 @@ h2 {
     background-color: #fff;
 }
 
-/* Botón */
 .btn-auth {
     width: 100%;
     padding: 14px;
@@ -101,7 +94,6 @@ h2 {
     background-color: #000;
 }
 
-/* Enlaces (Footer de la tarjeta) */
 .auth-footer {
     margin-top: 25px;
     font-size: 0.9rem;
@@ -120,7 +112,6 @@ h2 {
     text-decoration: underline;
 }
 
-/* --- MENSAJES DE REDIRECCIÓN / ERROR --- */
 .message-box {
     text-align: center;
 }
