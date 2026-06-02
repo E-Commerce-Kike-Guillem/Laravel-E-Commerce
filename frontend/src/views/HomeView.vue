@@ -10,7 +10,7 @@
         <div class="product-card" v-for="product in featuredProducts" :key="product.id">
           
           <div class="product-image">
-            <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
+            <img :src="'/contenido/productos/' + product.image || '/contenido/placeholder.jpg'" :alt="product.name">
           </div>
           
           <div class="product-info">
@@ -48,7 +48,7 @@
     >
       <div class="overflow-hidden rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105">
         <img 
-          :src="`../../public/contenido/productos/${cat}_mod.jpg`" 
+          :src="`/contenido/productos/${cat}_mod.jpg`" 
           :alt="cat" 
           class="w-full h-40 object-cover"
         >
