@@ -8,6 +8,8 @@ import ContactView from '../views/ContactView.vue';
 import AdminImportView from '../views/AdminImportView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import CartView from '../views/CartView.vue';
+import Checkout from '../views/Checkout.vue';
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -59,6 +61,12 @@ const router = createRouter({
       path: '/cart',
       name: 'cart',
       component: CartView
+    },
+    {
+      path: '/checkout',
+      name: 'Checkout',
+      component: Checkout,
+      meta: { requiresAuth: true } 
     }
   ]
 })

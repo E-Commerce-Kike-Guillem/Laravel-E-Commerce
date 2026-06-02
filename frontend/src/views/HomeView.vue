@@ -74,8 +74,8 @@ const router = useRouter();
 const featuredProducts = ref([])
 
 const goToCategory = (cat) => {
-  store.setCategory(cat); // Guardamos la categoría en memoria
-  router.push('/products'); // Navegamos a la vista SIN parámetros
+  store.setCategory(cat); 
+  router.push('/products'); 
 };
 
 const addToCart = (product) => {
@@ -87,7 +87,6 @@ const fetchFeaturedProducts = async () => {
     const response = await api.get('/products')
     const allProducts = response.data.data || response.data
     
-    // Seleccionamos 3 aleatorios
     featuredProducts.value = allProducts
       .sort(() => 0.5 - Math.random())
       .slice(0, 3)

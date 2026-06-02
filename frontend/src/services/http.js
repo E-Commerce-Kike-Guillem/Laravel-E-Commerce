@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const http = axios.create({
   baseURL: '/api',
-  withCredentials: true, // Envía las cookies de sesión
-  withXSRFToken: true,   // <-- ¡LA PIEZA QUE FALTABA! Extrae el token CSRF automáticamente
+  withCredentials: true, 
+  withXSRFToken: true,   
   headers: {
     'Accept': 'application/json',
   }

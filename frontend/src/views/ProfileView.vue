@@ -28,7 +28,6 @@
                <i class="fas fa-box"></i> Les meves comandes
             </a>
             
-            <a href="#" class="nav-item"><i class="fas fa-map-marker-alt"></i> Adreces</a>
             <button @click="authStore.logout" class="nav-item btn-logout"><i class="fas fa-sign-out-alt"></i> Tancar sessió</button>
           </nav>
         </aside>
@@ -162,20 +161,17 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import * as yup from 'yup'; // <-- 1. Importamos Yup
+import * as yup from 'yup';
 import http from '../services/http';
 import { useAuthStore } from '@/stores/authStore';
 
 const authStore = useAuthStore();
 
-// --- LÓGICA DE PESTAÑAS ---
 const activeTab = ref('details'); 
 
-// --- LÓGICA DEL PERFIL ---
 const form = ref({ name: '', email: '', password: '' });
 const errors = ref({}); 
 
-// 2. Definimos el esquema de validación de Yup
 const profileSchema = yup.object().shape({
   name: yup.string()
     .required('El nom és obligatori'),
@@ -183,7 +179,6 @@ const profileSchema = yup.object().shape({
     .email('El format del correu no és vàlid')
     .required('El correu electrònic és obligatori'),
   password: yup.string()
-    // Test personalizado: Si el campo está vacío, es válido. Si tiene texto, debe ser >= 8
     .test(
       'len',
       'La contrasenya ha de tindre almenys 8 caràcters',
@@ -199,15 +194,11 @@ onMounted(async () => {
 });
 
 const updateProfile = async () => {
-  // Limpiamos los errores anteriores
   errors.value = {}; 
   
   try {
-    // 3. PASO CLAVE: Validamos con Yup antes de contactar con el servidor
-    // abortEarly: false hace que Yup compruebe todos los campos a la vez, no solo el primero que falle
     await profileSchema.validate(form.value, { abortEarly: false });
 
-    // Si pasa la validación de Yup, hacemos la petición a Laravel
     await http.get('/sanctum/csrf-cookie');
     await http.patch('/profile', form.value);
     
@@ -218,20 +209,16 @@ const updateProfile = async () => {
     
     alert('Perfil actualitzat correctament!');
   } catch (error) {
-    // 4. Capturamos errores de validación del Frontend (Yup)
     if (error instanceof yup.ValidationError) {
       const yupErrors = {};
       error.inner.forEach((err) => {
-        // Los guardamos como Array para que coincida con el HTML que ya tienes (errors.campo[0])
         yupErrors[err.path] = [err.message];
       });
       errors.value = yupErrors;
     } 
-    // 5. Capturamos errores del Backend (Laravel) - Ej: El email ya existe en la BD
     else if (error.response && error.response.status === 422) {
       errors.value = error.response.data.errors;
     } 
-    // Otros errores (Ej: servidor caído)
     else {
       console.error("Error desconegut:", error);
       alert("S'ha produït un error al guardar les dades.");
@@ -239,7 +226,6 @@ const updateProfile = async () => {
   }
 };
 
-// --- LÓGICA DE PEDIDOS (Igual que antes) ---
 const orders = ref([]);
 const loadingOrders = ref(false);
 
@@ -279,7 +265,6 @@ const translateStatus = (status) => {
   min-height: calc(100vh - 100px);
 }
 
-/* Layout Grid: 1 Columna en móvil, 2 en PC */
 .profile-layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -295,7 +280,6 @@ const translateStatus = (status) => {
   }
 }
 
-/* --- SIDEBAR --- */
 .profile-sidebar {
   background: white;
   border-radius: 16px;
@@ -584,7 +568,6 @@ const translateStatus = (status) => {
   text-transform: uppercase;
 }
 
-/* Colores para los diferentes estados del pedido */
 .status-badge.pending { background-color: #fff3cd; color: #856404; }
 .status-badge.paid { background-color: #d4edda; color: #155724; }
 .status-badge.shipped { background-color: #cce5ff; color: #004085; }

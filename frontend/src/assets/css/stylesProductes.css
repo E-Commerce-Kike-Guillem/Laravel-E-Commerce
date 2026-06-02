@@ -1,6 +1,3 @@
-/* src/styles/styleIndex.css */
-
-/* ===== VARIABLES GLOBALS I RESET ===== */
 :root {
     --color-primary: #3b7da3;
     --color-footer-bg: #2a402a; 
@@ -47,7 +44,6 @@ h2 {
     font-weight: normal;
 }
 
-/* --- CONTENIDO DEL CATÁLOGO --- */
 .catalog-container {
     max-width: 1200px;
     margin: 0 auto; 
@@ -57,11 +53,11 @@ h2 {
 
 .catalog-header-wrapper {
     display: flex;
-    flex-wrap: wrap; /* Magia: Si no caben, el select baja a la siguiente línea */
-    justify-content: space-between; /* Título a la izquierda, select a la derecha */
-    align-items: center; /* Los centra verticalmente */
-    margin-bottom: 40px; /* El margen que antes tenía el título lo ponemos aquí */
-    gap: 20px; /* Separación de seguridad cuando se apilan en móvil */
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 40px; 
+    gap: 20px;
 }
 
 .page-title {
@@ -69,12 +65,11 @@ h2 {
     font-weight: bold;
     font-size: 24px;
     color: #333;
-    margin-bottom: 0; /* Quitamos el margen inferior porque ahora lo da el wrapper */
-    flex: 1 1 auto; /* Deja que el título respire y ocupe el espacio necesario */
+    margin-bottom: 0; 
+    flex: 1 1 auto; 
 }
 .page-content-wrapper { width: 100%; }
 
-/* --- HERO SECTION --- */
 .hero {
     position: relative;
     display: flex;
@@ -151,14 +146,12 @@ h2 {
     background-color: #2a5c7a;
 }
 
-/* --- GRID DE PRODUCTOS --- */
 .featured-products {
     max-width: 1200px;
     margin: 60px auto;
     padding: 0 20px;
 }
 
-/* Se mantiene la declaración de más abajo */
 .showcase {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -166,13 +159,11 @@ h2 {
 }
 
 
-/* --- TARJETA DE PRODUCTO MINIMAL (Clases que tenías arriba) --- */
 .producte-minimal {
     display: flex;
     flex-direction: column;
 }
 
-/* Se mantiene la declaración de más abajo */
 .producte-minimal img {
     width: 100%;
     height: 300px;
@@ -188,7 +179,6 @@ h2 {
     margin-bottom: 5px;
 }
 
-/* Se mantiene la declaración de más abajo */
 .prod-name {
     color: #222;
     text-decoration: none;
@@ -196,14 +186,12 @@ h2 {
     font-size: 1.1rem;
 }
 
-/* Se mantiene la declaración de más abajo */
 .prod-price {
     font-family: var(--font-ui);
     color: #555;
     font-size: 1rem;
 }
 
-/* --- TARJETA DE PRODUCTO NUEVA --- */
 .product-card {
   border: 1px solid #eaeaea;
   border-radius: 8px;
@@ -266,7 +254,6 @@ h2 {
 
 .btn-details-clean:hover { color: #000; text-decoration: underline; }
 
-/* Se mantiene la declaración de más abajo */
 .btn-cart-icon {
   width: 40px;
   height: 40px;
@@ -284,19 +271,16 @@ h2 {
 .btn-cart-icon:hover { transform: scale(1.05); }
 .btn-cart-icon i { font-size: 1.1rem; }
 
-/* --- SELECT Y MISC --- */
 select {
-    /* Eliminamos los márgenes negativos que lo rompían */
     margin: 0; 
-    padding: 8px 12px; /* Un poco de aire interior para que se lea mejor */
+    padding: 8px 12px; 
     background-color: white;
     color: #333;
     font-family: var(--font-ui);
     
-    /* Control de tamaño */
     width: 100%;
-    max-width: 250px; /* Nunca será más grande que esto */
-    flex: 0 1 250px; /* Le dice a Flexbox que intente medir 250px pero pueda encogerse si hace falta */
+    max-width: 250px; 
+    flex: 0 1 250px; 
     
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -304,22 +288,20 @@ select {
 
 select:focus {
     border-color: #243020;
-    outline: none; /* Quita el borde azul por defecto de los navegadores */
+    outline: none; 
 }
 
 .btn-cart-icon {
   transition: all 0.3s ease;
 }
 
-/* Estado de éxito (cuando se añade el producto) */
 .btn-cart-icon.is-added {
-  background-color: #1b6e2f !important; /* Verde de éxito */
+  background-color: #1b6e2f !important; 
   color: white !important;
   border-color: #28a745 !important;
-  transform: scale(1.1); /* Efecto de aumento sutil */
+  transform: scale(1.1); 
 }
 
-/* Animación de "pop" para el icono del check */
 @keyframes popIcon {
   0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
   70% { transform: scale(1.2) rotate(10deg); opacity: 1; }
