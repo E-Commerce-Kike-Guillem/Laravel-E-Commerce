@@ -10,7 +10,7 @@
         <div class="product-card" v-for="product in featuredProducts" :key="product.id">
           
           <div class="product-image">
-            <img :src="product.image || '/contenido/placeholder.jpg'" :alt="product.name">
+            <img :src="'/contenido/productos/' + product.image || '/contenido/placeholder.jpg'" :alt="product.name">
           </div>
           
           <div class="product-info">
