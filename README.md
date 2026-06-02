@@ -134,7 +134,7 @@ npm run dev
 La API estará disponible en:
 
 ```text
-http://localhost
+http://localhost/api
 ```
 
 El frontend se ejecutará normalmente en:
