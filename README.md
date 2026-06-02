@@ -4,7 +4,7 @@
 
 ### ¿Qué es E-Commerce Laravel + Vue?
 
-Es una plataforma de comercio electrónico moderna con una arquitectura desacoplada. Cuenta con una robusta API REST desarrollada en **Laravel** para el backend y una interfaz de usuario dinámica (SPA) construida con **Vue.js 3** en el frontend.
+Es una plataforma de comercio electrónico moderna con una arquitectura desacoplada. Cuenta con una API REST desarrollada en **Laravel** para el backend y una interfaz de usuario dinámica (SPA) construida con **Vue.js 3** en el frontend.
 
 Este proyecto gestiona:
 
@@ -13,10 +13,6 @@ Este proyecto gestiona:
 * Historial de pedidos inmutable mediante transacciones de base de datos.
 * Gestión de usuarios (registro, login, perfiles) protegida mediante **Laravel Sanctum**.
 * Administración e importación de datos desde un sistema legacy en PHP plano.
-
-### ¿Por qué lo usamos/desarrollamos?
-
-Este proyecto se desarrolla para establecer una **arquitectura robusta, escalable y mantenible** utilizando metodologías ágiles.
 
 La finalidad principal es disponer de una tienda online completa que ponga en práctica:
 
@@ -47,8 +43,8 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ### Backend (API REST)
 
-* PHP 8.x
-* Laravel 11.x
+* PHP 8.2
+* Laravel 12
 * Laravel Sanctum (Autenticación SPA)
 
 ### Frontend (SPA)
@@ -63,13 +59,8 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 
 ### Base de datos
 
-* MySQL / SQLite
+* MySQL
 * Gestionado mediante migraciones de Laravel
-
-### Testing
-
-* Pest
-* PHPUnit
 
 ### Infraestructura y despliegue
 
@@ -152,7 +143,7 @@ http://localhost
 El frontend se ejecutará normalmente en:
 
 ```text
-http://localhost:5173
+http://localhost:5174
 ```
 
 ---
@@ -162,16 +153,6 @@ http://localhost:5173
 ### Desarrollo
 
 Entorno local para cada desarrollador utilizando Docker y Laravel Sail.
-
-### Producción
-
-Añadir URL del despliegue cuando esté disponible.
-
-Ejemplo:
-
-```text
-https://ecommerce-ejemplo.com
-```
 
 ---
 
@@ -211,30 +192,3 @@ se encuentra en la carpeta:
 ```text
 /Documentació
 ```
-
-También está disponible en la Wiki del repositorio.
-
----
-
-## Lista de Contribuidores
-
-* **Tu Nombre / Usuario** — Desarrollo Full Stack
-
-Añadir aquí otros colaboradores del proyecto.
-
----
-
-## Inspiración
-
-Puedes incluir:
-
-* Diseños de Figma.
-* Wireframes.
-* Referencias visuales.
-* Proyectos similares utilizados como inspiración.
-
----
-
-## Licencia
-
-Este proyecto se distribuye bajo los términos de la **Licencia MIT** incluida en el repositorio.
