@@ -33,9 +33,6 @@ También sirve como demostración práctica del módulo **Despliegue de Aplicaci
 * [Entornos](#entornos)
 * [Guía de Contribución](#guía-de-contribución)
 * [Documentación de desarrollo](#documentación-de-desarrollo)
-* [Lista de Contribuidores](#lista-de-contribuidores)
-* [Inspiración](#inspiración)
-* [Licencia](#licencia)
 
 ---
 
